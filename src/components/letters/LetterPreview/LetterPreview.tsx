@@ -41,7 +41,7 @@ export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps
           <p>{errorMessage ?? "Something went wrong. Please try again."}</p>
         </div>
       ) : text ? (
-        <div className={styles.body}>{text}</div>
+        <div className={cx(styles.body, "scrollbarThin")}>{text}</div>
       ) : (
         <p className={styles.placeholder}>{PLACEHOLDER}</p>
       )}

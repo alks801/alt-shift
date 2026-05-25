@@ -9,7 +9,9 @@
   letter-spacing: -0.02em;
   /* 44/36 from Figma; unitless so it scales with the mobile font-size. */
   line-height: 1.222;
-  margin: var(--space-4) 0 var(--space-6);
+  margin: var(--space-4) 0 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
   color: var(--color-text);
 }
 
@@ -21,7 +23,23 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-6);
-  margin-bottom: var(--space-9);
+  margin-bottom: var(--space-7);
+  /* Hard cap so neither the textarea (grow) nor the preview (scrollable
+     body) can push the layout vertically — they fill or scroll instead. */
+  height: 600px;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Let the form grow to fill the column so `.actions { margin-top: auto }`
+   continues to pin the submit button to the bottom, aligned with the
+   preview's footer action. */
+.formColumn > form {
+  flex: 1;
 }
 
 .bannerWrap {
@@ -31,9 +49,10 @@
 @media (max-width: 880px) {
   .layout {
     grid-template-columns: 1fr;
+    /* Drop the desktop cap — stacked columns need natural heights. */
+    height: auto;
   }
   .title {
     font-size: var(--font-size-2xl);
-    padding-bottom: var(--space-4);
   }
 }

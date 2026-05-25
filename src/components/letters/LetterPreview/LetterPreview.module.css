@@ -50,6 +50,12 @@
 
 .body {
   flex: 1;
+  /* `min-height: 0` lets the flex item shrink below its content height
+     so that `overflow-y: auto` can actually scroll inside the wrap. */
+  min-height: 0;
+  overflow-y: auto;
+  /* Breathing room so the scrollbar thumb doesn't sit on top of the text. */
+  padding-right: var(--space-3);
   color: var(--color-text);
   font-size: var(--font-size-md);
   line-height: var(--line-height-relaxed);

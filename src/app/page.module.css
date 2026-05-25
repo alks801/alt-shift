@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  margin: var(--space-5) 0 var(--space-6);
+  margin: var(--space-5) 0 var(--space-7);
 }
 
 .title {
@@ -22,7 +22,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-9);
+  gap: var(--space-7);
 }
 
 @media (max-width: 720px) {

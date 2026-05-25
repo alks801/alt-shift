@@ -89,6 +89,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
         placeholder="Describe why you are a great fit or paste your bio"
         softMaxLength={DETAILS_MAX_LENGTH}
         showCounter
+        grow
         rows={6}
         disabled={isLoading}
       />

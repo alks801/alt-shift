@@ -5,6 +5,7 @@ import {
   type TextareaHTMLAttributes,
 } from "react";
 import { cx } from "@/lib/cx";
+import { describedBy } from "./describedBy";
 import styles from "./Field.module.css";
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -20,6 +21,12 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
    */
   softMaxLength?: number;
   showCounter?: boolean;
+  /**
+   * When true the field stretches to fill the available vertical space in
+   * its parent flex column (e.g. so an "Additional details" textarea grows
+   * to fill the gap between the inputs above and the actions below).
+   */
+  grow?: boolean;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -34,6 +41,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       maxLength,
       softMaxLength,
       showCounter,
+      grow,
       value,
       defaultValue,
       ...rest
@@ -42,11 +50,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) {
     const autoId = useId();
     const inputId = id ?? autoId;
-    const describedById = error
-      ? `${inputId}-error`
-      : hint
-        ? `${inputId}-hint`
-        : undefined;
+    const describedById = describedBy(inputId, error, hint);
 
     const currentLength =
       typeof value === "string"
@@ -61,7 +65,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const isInvalid = invalid || Boolean(error) || overSoftLimit;
 
     return (
-      <div className={styles.field}>
+      <div className={cx(styles.field, grow && styles.grow)}>
         <label htmlFor={inputId} className={styles.label}>
           {label}
         </label>
@@ -72,6 +76,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={cx(
             styles.control,
             styles.textarea,
+            "scrollbarThin",
             isInvalid && styles.invalid,
             className,
           )}
@@ -83,15 +88,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
         {(hint || error || (showCounter && counterLimit)) && (
           <div className={styles.footer}>
-            {error ? (
-              <span id={`${inputId}-error`} className={styles.error}>
-                {error}
-              </span>
-            ) : hint ? (
-              <span id={`${inputId}-hint`} className={styles.hint}>
-                {hint}
-              </span>
-            ) : null}
             {showCounter && counterLimit && (
               <span
                 className={styles.counter}
@@ -101,6 +97,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 {currentLength}/{counterLimit}
               </span>
             )}
+            {error ? (
+              <span id={`${inputId}-error`} className={styles.error}>
+                {error}
+              </span>
+            ) : hint ? (
+              <span id={`${inputId}-hint`} className={styles.hint}>
+                {hint}
+              </span>
+            ) : null}
           </div>
         )}
       </div>

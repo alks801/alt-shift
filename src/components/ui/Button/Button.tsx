@@ -58,6 +58,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       ref={ref}
       type={type}
       disabled={disabled || loading}
+      data-loading={loading || undefined}
       className={cx(buttonClassName({ variant, size, fullWidth }), className)}
       {...rest}
     >

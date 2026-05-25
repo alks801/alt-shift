@@ -1,13 +1,14 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 6px;
 }
 
 .label {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 20px;
+  color: var(--color-ink-700);
 }
 
 .controlWrap {
@@ -17,13 +18,18 @@
 .control {
   width: 100%;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
   background-color: var(--color-white);
   color: var(--color-text);
   font-size: var(--font-size-md);
   line-height: var(--line-height-normal);
+  box-shadow: var(--shadow-sm);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.input {
+  height: 40px;
 }
 
 .control::placeholder {
@@ -36,8 +42,8 @@
 
 .control:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  border-color: var(--color-brand-300);
+  box-shadow: 0 0 0 4px var(--color-brand-200);
 }
 
 .control:disabled {
@@ -47,17 +53,32 @@
 }
 
 .invalid {
-  border-color: var(--color-danger);
+  border-color: var(--color-danger-300);
 }
 
+/* Repeat border-color so the focus state of an invalid field doesn't get
+   overridden by `.control:focus` (which has higher specificity than `.invalid`). */
 .invalid:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 18%, transparent);
+  border-color: var(--color-danger-300);
+  box-shadow: 0 0 0 4px var(--color-danger-100);
 }
 
 .textarea {
   min-height: 140px;
   resize: none;
   font-family: inherit;
+}
+
+/* Applied to the Field wrapper when `grow` is passed — lets the textarea
+   take all remaining vertical space inside its parent flex column. */
+.grow {
+  flex: 1;
+  min-height: 0;
+}
+
+.grow .textarea {
+  flex: 1;
+  min-height: 0;
 }
 
 .footer {
@@ -79,10 +100,11 @@
 }
 
 .counter {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-subtle);
-  font-variant-numeric: tabular-nums;
-  margin-left: auto;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: 20px;
+  color: var(--color-ink-600);
 }
 
 .counter[data-over-limit="true"] {

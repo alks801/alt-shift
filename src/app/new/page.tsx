@@ -94,15 +94,16 @@ export default function NewLetterPage() {
       <main>
         <PageContainer>
           <div className={styles.page}>
-            <h1 className={styles.title}>{heading}</h1>
-
             <div className={styles.layout}>
-              <LetterForm
-                values={values}
-                onChange={setValues}
-                onSubmit={handleGenerate}
-                status={status}
-              />
+              <div className={styles.formColumn}>
+                <h1 className={styles.title}>{heading}</h1>
+                <LetterForm
+                  values={values}
+                  onChange={setValues}
+                  onSubmit={handleGenerate}
+                  status={status}
+                />
+              </div>
               <LetterPreview
                 status={status}
                 text={preview}
@@ -123,10 +124,11 @@ export default function NewLetterPage() {
 }
 
 function buildHeading(values: LetterInput): React.ReactNode {
-  const job = values.jobTitle.trim();
-  const company = values.company.trim();
-  if (!job && !company) {
+  const parts = [values.jobTitle, values.company]
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (parts.length === 0) {
     return <span className={styles.titleMuted}>New application</span>;
   }
-  return `${job || "New role"}, ${company || "company"}`;
+  return parts.join(", ");
 }

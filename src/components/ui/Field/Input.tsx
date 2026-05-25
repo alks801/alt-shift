@@ -5,6 +5,7 @@ import {
   type ReactNode,
 } from "react";
 import { cx } from "@/lib/cx";
+import { describedBy } from "./describedBy";
 import styles from "./Field.module.css";
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -20,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 ) {
   const autoId = useId();
   const inputId = id ?? autoId;
-  const describedById = error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined;
+  const describedById = describedBy(inputId, error, hint);
   const isInvalid = invalid || Boolean(error);
 
   return (
@@ -31,7 +32,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <input
         ref={ref}
         id={inputId}
-        className={cx(styles.control, isInvalid && styles.invalid, className)}
+        className={cx(styles.control, styles.input, isInvalid && styles.invalid, className)}
         aria-invalid={isInvalid || undefined}
         aria-describedby={describedById}
         {...rest}
