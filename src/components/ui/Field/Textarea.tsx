@@ -12,7 +12,13 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   hint?: ReactNode;
   error?: ReactNode;
   invalid?: boolean;
-  /** When set, renders a `current / max` counter under the field. */
+  /**
+   * Soft character cap. Users can still type past it, but the field flips
+   * to its invalid style and the counter turns red. The parent decides
+   * whether to block submission. Use this instead of the native `maxLength`
+   * whenever you want the limit to be a guideline, not a hard wall.
+   */
+  softMaxLength?: number;
   showCounter?: boolean;
 }
 
@@ -26,6 +32,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       id,
       className,
       maxLength,
+      softMaxLength,
       showCounter,
       value,
       defaultValue,
@@ -40,7 +47,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       : hint
         ? `${inputId}-hint`
         : undefined;
-    const isInvalid = invalid || Boolean(error);
 
     const currentLength =
       typeof value === "string"
@@ -48,8 +54,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         : typeof defaultValue === "string"
           ? defaultValue.length
           : 0;
-    const nearLimit =
-      typeof maxLength === "number" && currentLength / maxLength >= 0.95;
+
+    const counterLimit = softMaxLength ?? maxLength;
+    const overSoftLimit =
+      typeof softMaxLength === "number" && currentLength > softMaxLength;
+    const isInvalid = invalid || Boolean(error) || overSoftLimit;
 
     return (
       <div className={styles.field}>
@@ -72,7 +81,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           defaultValue={defaultValue}
           {...rest}
         />
-        {(hint || error || (showCounter && maxLength)) && (
+        {(hint || error || (showCounter && counterLimit)) && (
           <div className={styles.footer}>
             {error ? (
               <span id={`${inputId}-error`} className={styles.error}>
@@ -83,13 +92,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 {hint}
               </span>
             ) : null}
-            {showCounter && maxLength && (
+            {showCounter && counterLimit && (
               <span
                 className={styles.counter}
-                data-near-limit={nearLimit || undefined}
+                data-over-limit={overSoftLimit || undefined}
                 aria-live="polite"
               >
-                {currentLength}/{maxLength}
+                {currentLength}/{counterLimit}
               </span>
             )}
           </div>

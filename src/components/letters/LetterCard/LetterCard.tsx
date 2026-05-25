@@ -17,11 +17,14 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
   const { copied, copy } = useCopyToClipboard();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const title = [letter.jobTitle, letter.company].filter(Boolean).join(", ");
-
   return (
-    <article className={styles.card}>
-      {title && <header className={styles.header}>{title}</header>}
+    <article
+      className={styles.card}
+      aria-label={
+        [letter.jobTitle, letter.company].filter(Boolean).join(", ") ||
+        "Cover letter"
+      }
+    >
       <div className={styles.body}>{letter.body}</div>
       <div className={styles.footer}>
         <button

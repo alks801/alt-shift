@@ -1,38 +1,26 @@
+import Image from "next/image";
 import styles from "./Logo.module.css";
 
 interface LogoProps {
-  /** Hide the wordmark, render only the mark. Used in compact header slots. */
-  iconOnly?: boolean;
+  /** Pixel height of the logo. Width auto-scales to preserve aspect ratio. */
+  height?: number;
 }
 
-export function Logo({ iconOnly = false }: LogoProps) {
+/**
+ * Brand mark + wordmark, served as a single optimised PNG from `/public`.
+ * The asset already includes the "Alt+Shift" wordmark — no separate text
+ * element is rendered, which keeps the logo pixel-perfect at any zoom level.
+ */
+export function Logo({ height = 32 }: LogoProps) {
+  const width = Math.round((height * 179) / 48);
   return (
-    <span className={styles.logo} aria-label="Alt+Shift">
-      <span className={styles.mark} aria-hidden>
-        <svg viewBox="0 0 32 32" fill="none" width="100%" height="100%">
-          <path
-            d="M3 22c4-1.6 7.5-1.6 11 0 3.5 1.6 7 1.6 11 0"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M3 17c4-1.6 7.5-1.6 11 0 3.5 1.6 7 1.6 11 0"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            opacity="0.75"
-          />
-          <path
-            d="M3 12c4-1.6 7.5-1.6 11 0 3.5 1.6 7 1.6 11 0"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            opacity="0.5"
-          />
-        </svg>
-      </span>
-      {!iconOnly && <span className={styles.wordmark}>Alt+Shift</span>}
-    </span>
+    <Image
+      src="/logo.svg"
+      alt="Alt+Shift"
+      width={width}
+      height={height}
+      priority
+      className={styles.logo}
+    />
   );
 }

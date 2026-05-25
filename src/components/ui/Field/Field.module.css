@@ -85,6 +85,6 @@
   margin-left: auto;
 }
 
-.counter[data-near-limit="true"] {
+.counter[data-over-limit="true"] {
   color: var(--color-danger);
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { type FormEvent } from "react";
-import { RefreshCw, Sparkles } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
 import {
@@ -22,11 +22,15 @@ interface LetterFormProps {
  * Controlled form for cover-letter inputs.
  *
  * Submit button modes:
- *   idle / error → primary "Generate" with sparkle icon
+ *   idle / error → primary "Generate Now"
  *   loading      → primary spinner, disabled
  *   ready        → secondary "Try Again" with refresh icon
  *
- * Validation is intentionally minimal: only Job title + Company are required.
+ * Validation:
+ *   - Job title + Company are required (button disabled until both filled).
+ *   - "Additional details" uses a soft limit: typing past the limit is allowed
+ *     but flips the field to its invalid style and blocks submission, mirroring
+ *     the "Too much text" state in the Figma spec.
  */
 export function LetterForm({ values, onChange, onSubmit, status }: LetterFormProps) {
   const isLoading = status === "loading";
@@ -43,8 +47,10 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
     onSubmit();
   };
 
-  const canSubmit =
+  const detailsOverLimit = values.details.length > DETAILS_MAX_LENGTH;
+  const hasRequired =
     values.jobTitle.trim().length > 0 && values.company.trim().length > 0;
+  const canSubmit = hasRequired && !detailsOverLimit;
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
@@ -80,8 +86,8 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
         label="Additional details"
         value={values.details}
         onChange={handleField("details")}
-        placeholder="Anything about you the model should weave in — recent projects, motivation, tone you want, etc."
-        maxLength={DETAILS_MAX_LENGTH}
+        placeholder="Describe why you are a great fit or paste your bio"
+        softMaxLength={DETAILS_MAX_LENGTH}
         showCounter
         rows={6}
         disabled={isLoading}
@@ -104,10 +110,9 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
             size="lg"
             fullWidth
             loading={isLoading}
-            leadingIcon={<Sparkles size={18} />}
             disabled={!canSubmit}
           >
-            {isLoading ? "" : "Generate"}
+            {isLoading ? "" : "Generate Now"}
           </Button>
         )}
       </div>

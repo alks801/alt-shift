@@ -73,8 +73,10 @@
   --radius-pill: 999px;
 
   /* Type scale */
-  --font-family-sans: var(--font-inter), -apple-system, BlinkMacSystemFont,
+  --font-family-sans: var(--font-fixel-text), -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-family-display: var(--font-fixel-display), var(--font-fixel-text),
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --font-size-xs: 12px;
   --font-size-sm: 13px;

@@ -7,7 +7,13 @@
   flex-direction: column;
 }
 
-.idle,
+.placeholder {
+  flex: 1;
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+}
+
 .loading,
 .error {
   flex: 1;
@@ -17,17 +23,14 @@
   justify-content: center;
   text-align: center;
   gap: var(--space-3);
-  color: var(--color-text-subtle);
 }
 
-.idle p,
+.error {
+  color: var(--color-danger);
+}
+
 .error p {
   max-width: 280px;
-  font-size: var(--font-size-md);
-}
-
-.error p {
-  color: var(--color-danger);
 }
 
 /* Loading "orb" — soft pulsing circle that matches the reference's mood */
@@ -84,8 +87,13 @@
   transition: color var(--transition-fast);
 }
 
-.copyAction:hover {
+.copyAction:hover:not(:disabled) {
   color: var(--color-text);
+}
+
+.copyAction:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .copied {

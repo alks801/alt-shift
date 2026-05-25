@@ -14,13 +14,6 @@
   background-color: var(--color-surface-strong);
 }
 
-.header {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  line-height: var(--line-height-snug);
-}
-
 .body {
   position: relative;
   flex: 1;
@@ -28,9 +21,9 @@
   font-size: var(--font-size-md);
   line-height: var(--line-height-relaxed);
   overflow: hidden;
-  max-height: 7em;
+  max-height: 8.5em;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   white-space: pre-wrap;
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
