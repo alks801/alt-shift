@@ -12,10 +12,17 @@ import styles from "./Icon.module.css";
  * Multi-colour icons (badges) are rendered via `background-image`, keeping
  * their baked-in palette; `currentColor` does not apply to them.
  */
-export type IconName = "home" | "plus" | "copy" | "trash" | "repeat" | "check";
+export type IconName =
+  | "home"
+  | "plus"
+  | "copy"
+  | "trash"
+  | "repeat"
+  | "check"
+  | "cat";
 
 /** Icons that carry their own colours and must not be tinted. */
-const COLORED_ICONS: ReadonlySet<IconName> = new Set<IconName>();
+const COLORED_ICONS: ReadonlySet<IconName> = new Set<IconName>(["cat"]);
 
 interface IconProps {
   name: IconName;

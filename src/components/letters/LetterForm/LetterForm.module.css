@@ -13,6 +13,9 @@
 .actions {
   display: flex;
   gap: var(--space-3);
+  /* Pin to the bottom of the (stretched) form so the submit button stays
+     aligned with the preview's footer action when the preview grows. */
+  margin-top: auto;
 }
 
 .actions > * {

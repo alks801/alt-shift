@@ -1,7 +1,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-5);
+  /* row-gap column-gap */
+  gap: var(--space-6) var(--space-4);
 }
 
 .skeleton {

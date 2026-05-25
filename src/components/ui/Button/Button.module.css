@@ -2,11 +2,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   font-weight: var(--font-weight-semibold);
-  line-height: 1;
   cursor: pointer;
   transition:
     background-color var(--transition-fast),
@@ -26,23 +24,29 @@
   transform: translateY(1px);
 }
 
-/* Sizes */
+/* Sizes — gap/font/line-height come from Figma spec. */
 .sm {
   padding: 8px 14px;
+  gap: var(--space-2);
   font-size: var(--font-size-sm);
+  line-height: 1.5;
   height: 36px;
 }
 
 .md {
   padding: 10px 18px;
-  font-size: var(--font-size-md);
+  gap: var(--space-2);
+  font-size: var(--font-size-lg);
+  line-height: 1.5;
   height: 44px;
 }
 
 .lg {
-  padding: 14px 22px;
-  font-size: var(--font-size-md);
-  height: 52px;
+  padding: 16px 28px;
+  gap: var(--space-3);
+  font-size: var(--font-size-body);
+  line-height: 28px;
+  height: 60px;
 }
 
 /* Variants */

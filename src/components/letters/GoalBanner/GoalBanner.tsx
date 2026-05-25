@@ -30,6 +30,7 @@ export function GoalBanner({ count }: GoalBannerProps) {
       <p className={styles.subtitle}>{subtitle}</p>
       <ButtonLink
         href="/new"
+        size="lg"
         leadingIcon={<Icon name="plus" />}
         className={styles.action}
       >
