@@ -1,0 +1,35 @@
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-ink-300);
+  transition: background-color var(--transition-base);
+}
+
+.dot[data-filled="true"] {
+  background-color: var(--color-ink-900);
+}
+
+/* Bar style — used in the goal banner */
+.bars {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bar {
+  width: 28px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-ink-300);
+}
+
+.bar[data-filled="true"] {
+  background-color: var(--color-ink-900);
+}

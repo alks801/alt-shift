@@ -1,0 +1,43 @@
+.wrap {
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-7);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  background-color: var(--color-bg-subtle);
+}
+
+.icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-600);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  max-width: 420px;
+}
+
+.action {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: var(--space-8) var(--space-5);
+  }
+}
