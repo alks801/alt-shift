@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Check, Copy } from "lucide-react";
+import { Icon } from "@/components/ui/Icon";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import { cx } from "@/lib/cx";
 import styles from "./LetterPreview.module.css";
@@ -15,45 +15,47 @@ interface LetterPreviewProps {
 
 const PLACEHOLDER = "Your personalized job application will appear here…";
 
+/**
+ * Right-hand preview pane.
+ *
+ * States:
+ *   idle    — placeholder copy + disabled "Copy" affordance.
+ *   loading — floating brand orb, no body text (we intentionally don't
+ *             reveal partial output mid-generation; cleaner UX, no flicker).
+ *   ready   — full letter + active "Copy" button.
+ *   error   — alert with retry hint.
+ */
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
   const { copied, copy } = useCopyToClipboard();
-  const isStreaming = status === "loading" && text.length > 0;
-  const isLoadingOrb = status === "loading" && !isStreaming;
+  const isLoading = status === "loading";
   const isError = status === "error";
 
   return (
     <div className={styles.wrap} aria-live="polite">
-      {isLoadingOrb ? (
+      {isLoading ? (
         <div className={styles.loading} aria-label="Generating letter">
-          <div className={styles.orb} />
+          <div className={styles.orb} role="presentation" />
         </div>
       ) : isError ? (
         <div className={styles.error} role="alert">
-          <AlertCircle size={28} aria-hidden />
           <p>{errorMessage ?? "Something went wrong. Please try again."}</p>
         </div>
       ) : text ? (
-        <div className={cx(styles.body, isStreaming && styles.streaming)}>
-          {text}
-        </div>
+        <div className={styles.body}>{text}</div>
       ) : (
         <p className={styles.placeholder}>{PLACEHOLDER}</p>
       )}
 
-      {!isLoadingOrb && !isError && (
+      {!isLoading && !isError && (
         <div className={styles.footer}>
           <button
             type="button"
             onClick={() => copy(text)}
-            disabled={!text || isStreaming}
+            disabled={!text}
             className={cx(styles.copyAction, copied && styles.copied)}
           >
             {copied ? "Copied!" : "Copy to clipboard"}
-            {copied ? (
-              <Check size={16} aria-hidden />
-            ) : (
-              <Copy size={16} aria-hidden />
-            )}
+            <Icon name={copied ? "check" : "copy"} size={18} />
           </button>
         </div>
       )}

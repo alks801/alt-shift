@@ -1,9 +1,9 @@
 "use client";
 
 import { type FormEvent } from "react";
-import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
+import { Icon } from "@/components/ui/Icon";
 import {
   DETAILS_MAX_LENGTH,
   STRENGTHS_MAX_LENGTH,
@@ -99,7 +99,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
             variant="secondary"
             size="lg"
             fullWidth
-            leadingIcon={<RefreshCw size={18} />}
+            leadingIcon={<Icon name="repeat" />}
             disabled={!canSubmit}
           >
             Try Again

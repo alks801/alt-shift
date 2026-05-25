@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { Icon } from "@/components/ui/Icon";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import type { Letter } from "@/lib/types";
 import { cx } from "@/lib/cx";
@@ -33,7 +33,7 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
           data-tone="danger"
           onClick={() => setConfirmOpen(true)}
         >
-          <Trash2 size={16} aria-hidden />
+          <Icon name="trash" size={18} />
           Delete
         </button>
         <button
@@ -42,7 +42,7 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
           onClick={() => copy(letter.body)}
         >
           {copied ? "Copied!" : "Copy to clipboard"}
-          {copied ? <Check size={16} aria-hidden /> : <Copy size={16} aria-hidden />}
+          <Icon name={copied ? "check" : "copy"} size={18} />
         </button>
       </div>
 

@@ -1,0 +1,26 @@
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Monochrome icons render the SVG as a CSS mask and inherit `currentColor`,
+   so they pick up button/link text colours on hover, focus, active states. */
+.mono {
+  background-color: currentColor;
+  mask-image: var(--icon-url);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--icon-url);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* Multi-colour icons keep their baked-in palette (e.g. status badges). */
+.colored {
+  background-image: var(--icon-url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

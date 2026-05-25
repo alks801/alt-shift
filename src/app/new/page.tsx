@@ -43,9 +43,11 @@ export default function NewLetterPage() {
     setErrorMessage(undefined);
 
     try {
+      // No `onChunk` — we wait for the full letter to keep the loading state
+      // visually calm (floating orb). Showing partial output here was noisy
+      // and added little value once the orb animation was in place.
       const finalText = await generateCoverLetter(values, {
         signal: controller.signal,
-        onChunk: (chunk) => setPreview((prev) => prev + chunk),
       });
       if (controller.signal.aborted) return;
 

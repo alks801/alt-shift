@@ -96,11 +96,24 @@
 }
 
 .loadingIcon {
-  animation: spin 0.9s linear infinite;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("/button-loader.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingIcon {
+    animation: none;
   }
 }

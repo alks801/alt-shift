@@ -1,14 +1,11 @@
-import { Plus, Sparkles } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { GOAL_LETTERS } from "@/lib/constants";
 import styles from "./EmptyState.module.css";
 
 export function EmptyState() {
   return (
     <section className={styles.wrap} aria-labelledby="empty-title">
-      <div className={styles.icon} aria-hidden>
-        <Sparkles size={26} />
-      </div>
       <h2 id="empty-title" className={styles.title}>
         No applications yet
       </h2>
@@ -18,7 +15,7 @@ export function EmptyState() {
       </p>
       <ButtonLink
         href="/new"
-        leadingIcon={<Plus size={18} />}
+        leadingIcon={<Icon name="plus" />}
         className={styles.action}
       >
         Create your first one

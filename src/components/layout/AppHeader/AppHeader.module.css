@@ -19,26 +19,11 @@
   gap: var(--space-4);
 }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-md);
-}
-
-.statusText {
-  white-space: nowrap;
-}
-
 @media (max-width: 640px) {
   .header {
     padding: var(--space-5) 0 var(--space-3);
   }
   .inner {
     padding: 0 var(--space-5);
-  }
-  .statusText {
-    display: none;
   }
 }

@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { ProgressDots } from "@/components/ui/ProgressDots";
 import { GOAL_LETTERS } from "@/lib/constants";
 import styles from "./GoalBanner.module.css";
@@ -30,7 +30,7 @@ export function GoalBanner({ count }: GoalBannerProps) {
       <p className={styles.subtitle}>{subtitle}</p>
       <ButtonLink
         href="/new"
-        leadingIcon={<Plus size={18} />}
+        leadingIcon={<Icon name="plus" />}
         className={styles.action}
       >
         Create New

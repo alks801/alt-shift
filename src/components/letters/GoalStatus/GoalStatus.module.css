@@ -1,0 +1,29 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-md);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-600);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .label {
+    display: none;
+  }
+}

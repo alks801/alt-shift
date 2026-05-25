@@ -33,8 +33,9 @@ Useful scripts:
 - **CSS Modules + design tokens in `:root` CSS variables** — small footprint,
   no runtime cost, zero classname collisions, and trivial to swap a theme.
   No Tailwind, as preferred by the brief.
-- **`lucide-react`** — consistent SVG icon set used in the mockups
-  (Home, Plus, Trash, Copy, RefreshCw, Sparkles, AlertCircle).
+- **Custom SVG icons** — bundled brand assets under `public/*.svg`, rendered via
+  the local `<Icon>` component. Monochrome icons use CSS `mask-image` so they
+  inherit `currentColor` from the surrounding text.
 - **`localStorage` with a versioned schema** for persistence — no backend
   required, survives reloads, works offline.
 - **`openai`** SDK for streaming completions (server-side only).

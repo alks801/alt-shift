@@ -1,5 +1,4 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import { Loader2 } from "lucide-react";
 import { cx } from "@/lib/cx";
 import styles from "./Button.module.css";
 
@@ -63,7 +62,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {...rest}
     >
       {loading ? (
-        <Loader2 size={18} className={styles.loadingIcon} aria-hidden />
+        <span className={styles.loadingIcon} aria-hidden />
       ) : (
         leadingIcon
       )}
