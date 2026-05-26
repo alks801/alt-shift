@@ -19,12 +19,7 @@ export function AppHeader({ generatedCount }: AppHeaderProps) {
         </Link>
         <div className={styles.right}>
           <GoalStatus count={generatedCount} />
-          <Link
-            href="/"
-            aria-label="Go to dashboard"
-            title="Dashboard"
-            className={styles.iconLink}
-          >
+          <Link href="/" aria-label="Go to dashboard" title="Dashboard" className={styles.iconLink}>
             <Icon name="home" size={20} />
           </Link>
         </div>

@@ -37,16 +37,9 @@ export const metadata: Metadata = {
     "Generate sincere, tailored cover letters with AI. Track your progress toward your weekly application goal.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${fixelDisplay.variable} ${fixelText.variable}`}
-    >
+    <html lang="en" className={`${fixelDisplay.variable} ${fixelText.variable}`}>
       <body>
         <LettersProvider>{children}</LettersProvider>
       </body>

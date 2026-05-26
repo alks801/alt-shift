@@ -12,14 +12,7 @@ import styles from "./Icon.module.css";
  * Multi-colour icons (badges) are rendered via `background-image`, keeping
  * their baked-in palette; `currentColor` does not apply to them.
  */
-export type IconName =
-  | "home"
-  | "plus"
-  | "copy"
-  | "trash"
-  | "repeat"
-  | "check"
-  | "cat";
+export type IconName = "home" | "plus" | "copy" | "trash" | "repeat" | "check" | "cat";
 
 /** Icons that carry their own colours and must not be tinted. */
 const COLORED_ICONS: ReadonlySet<IconName> = new Set<IconName>(["cat"]);
@@ -48,11 +41,5 @@ export function Icon({ name, size = 18, className, "aria-label": ariaLabel }: Ic
     "--icon-url": `url("/${name}.svg")`,
   } as CSSProperties;
 
-  return (
-    <span
-      className={cx(styles.icon, variant, className)}
-      style={style}
-      {...a11y}
-    />
-  );
+  return <span className={cx(styles.icon, variant, className)} style={style} {...a11y} />;
 }

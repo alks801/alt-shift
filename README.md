@@ -16,14 +16,14 @@ npm run dev                   # http://localhost:3000
 
 Useful scripts:
 
-| Script              | What it does                              |
-| ------------------- | ----------------------------------------- |
-| `npm run dev`       | Next.js dev server with hot reload        |
-| `npm run build`     | Production build                          |
-| `npm run start`     | Run the production build                  |
-| `npm run typecheck` | `tsc --noEmit` over the whole project     |
-| `npm run lint`      | ESLint (`next/core-web-vitals` + TS)      |
-| `npm test`          | Vitest + Testing Library (jsdom)          |
+| Script              | What it does                          |
+| ------------------- | ------------------------------------- |
+| `npm run dev`       | Next.js dev server with hot reload    |
+| `npm run build`     | Production build                      |
+| `npm run start`     | Run the production build              |
+| `npm run typecheck` | `tsc --noEmit` over the whole project |
+| `npm run lint`      | ESLint (`next/core-web-vitals` + TS)  |
+| `npm test`          | Vitest + Testing Library (jsdom)      |
 
 ## Stack
 
@@ -76,12 +76,14 @@ tests/
 ## Decision log
 
 ### Stack — Next.js 15 App Router
+
 Picked over Vite-SPA because the brief asks for a real AI integration and
 shipping an OpenAI key to the browser is unacceptable. With Next.js the
 `/api/generate` route streams from OpenAI server-side; the client just reads
 plain-text chunks. As a bonus we get static prerender for `/` and `/new`.
 
 ### Styling — CSS Modules + CSS variables
+
 The brief discourages Tailwind. I wanted "design tokens as the API of the
 visual system" without a CSS-in-JS runtime, so I went with CSS variables in
 `src/styles/tokens.css` and CSS Modules per component. Components reference
@@ -89,6 +91,7 @@ tokens like `var(--space-4)` instead of magic numbers, which makes a future
 dark theme or a tighter density mode a one-file change.
 
 ### Component layering
+
 Three layers, sorted by domain coupling:
 
 1. `components/ui/*` — primitives (Button, IconButton, Input, Textarea, Logo,
@@ -103,6 +106,7 @@ Three layers, sorted by domain coupling:
 that breaks accessibility and HTML validation.
 
 ### AI — server-only with a callback client
+
 `generateCoverLetter(input, { signal, onChunk }): Promise<string>` is a
 plain async function: it returns the final letter and forwards every text
 chunk to `onChunk` as it arrives so the UI can render progressively. No
@@ -117,6 +121,7 @@ right status code so the client can surface them in the UI. The previous
 real problems from the user.
 
 ### Persistence — versioned localStorage
+
 The storage key is `alt-shift:letters:v1`. Payload is wrapped in a
 `{ version: 1, letters: [...] }` envelope. If we ever need to migrate, we
 bump the key and write a one-shot migration; bad payloads (corrupted JSON,
@@ -132,6 +137,7 @@ pages share the same in-memory list — the dashboard and the form can't
 diverge and there's only ever a single hydration round-trip.
 
 ### "Try Again" semantics
+
 The first successful generation creates a new letter. Subsequent regenerations
 in the same session **overwrite** that letter instead of appending — otherwise
 a quick experimentation session would flood the dashboard with discarded
@@ -139,12 +145,14 @@ drafts. Once the user leaves `/new`, the session ID is dropped and the next
 visit starts a fresh letter.
 
 ### Empty state
+
 Since the brief leaves this to designer discretion, I rendered a dashed-border
 "empty card" with the same brand-mint accent as the goal banner, a Sparkles
 icon, and a primary CTA pointing to `/new`. The copy reinforces the 5-letter
 goal so the motivation hook still lands even before the first letter exists.
 
 ### Mobile
+
 - Header: progress text hides under 640px; only the dots + home icon remain.
 - Dashboard grid collapses to a single column under 720px.
 - `/new` form and preview stack vertically under 880px so the form fields
@@ -152,6 +160,7 @@ goal so the motivation hook still lands even before the first letter exists.
 - Form's two-column row (job title / company) collapses under 540px.
 
 ### Accessibility notes
+
 - All interactive controls have visible focus rings.
 - The progress dots use `role="img"` + `aria-label` so screen readers hear
   "3 of 5 applications generated" instead of decorative dots.
@@ -165,6 +174,7 @@ goal so the motivation hook still lands even before the first letter exists.
 - All running animations respect `prefers-reduced-motion: reduce`.
 
 ### What I'd add next
+
 - Drawer/modal to **view** a letter in full from the dashboard (preview is
   truncated to 4 lines today).
 - Edit-in-place for already generated letters.

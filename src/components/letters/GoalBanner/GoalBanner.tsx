@@ -11,10 +11,8 @@ import styles from "./GoalBanner.module.css";
 type Variant = "general" | "today";
 
 const SUBTITLE: Record<Variant, string> = {
-  general:
-    "Generate and send out couple more job applications to get hired faster",
-  today:
-    "Generate and send out couple more job applications today to get hired faster",
+  general: "Generate and send out couple more job applications to get hired faster",
+  today: "Generate and send out couple more job applications today to get hired faster",
 };
 
 interface GoalBannerProps {

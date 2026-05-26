@@ -21,17 +21,10 @@ export function buttonClassName({
   size = "md",
   fullWidth,
 }: ButtonStyleProps = {}): string {
-  return cx(
-    styles.button,
-    styles[variant],
-    styles[size],
-    fullWidth && styles.fullWidth,
-  );
+  return cx(styles.button, styles[variant], styles[size], fullWidth && styles.fullWidth);
 }
 
-export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    ButtonStyleProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonStyleProps {
   loading?: boolean;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
@@ -62,11 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       className={cx(buttonClassName({ variant, size, fullWidth }), className)}
       {...rest}
     >
-      {loading ? (
-        <span className={styles.loadingIcon} aria-hidden />
-      ) : (
-        leadingIcon
-      )}
+      {loading ? <span className={styles.loadingIcon} aria-hidden /> : leadingIcon}
       {children}
       {!loading && trailingIcon}
     </button>

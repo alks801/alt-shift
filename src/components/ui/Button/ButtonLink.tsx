@@ -4,7 +4,8 @@ import { cx } from "@/lib/cx";
 import { buttonClassName, type ButtonStyleProps } from "./Button";
 
 interface ButtonLinkProps
-  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>,
+  extends
+    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>,
     LinkProps,
     ButtonStyleProps {
   leadingIcon?: ReactNode;
@@ -26,10 +27,7 @@ export function ButtonLink({
   ...linkProps
 }: ButtonLinkProps) {
   return (
-    <Link
-      {...linkProps}
-      className={cx(buttonClassName({ variant, size }), className)}
-    >
+    <Link {...linkProps} className={cx(buttonClassName({ variant, size }), className)}>
       {leadingIcon}
       {children}
     </Link>

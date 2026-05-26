@@ -4,10 +4,7 @@ import { type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
 import { Icon } from "@/components/ui/Icon";
-import {
-  DETAILS_MAX_LENGTH,
-  STRENGTHS_MAX_LENGTH,
-} from "@/lib/constants";
+import { DETAILS_MAX_LENGTH, STRENGTHS_MAX_LENGTH } from "@/lib/constants";
 import type { LetterInput } from "@/lib/types";
 import styles from "./LetterForm.module.css";
 
@@ -48,8 +45,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
   };
 
   const detailsOverLimit = values.details.length > DETAILS_MAX_LENGTH;
-  const hasRequired =
-    values.jobTitle.trim().length > 0 && values.company.trim().length > 0;
+  const hasRequired = values.jobTitle.trim().length > 0 && values.company.trim().length > 0;
   const canSubmit = hasRequired && !detailsOverLimit;
 
   return (
@@ -106,13 +102,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
             Try Again
           </Button>
         ) : (
-          <Button
-            type="submit"
-            size="lg"
-            fullWidth
-            loading={isLoading}
-            disabled={!canSubmit}
-          >
+          <Button type="submit" size="lg" fullWidth loading={isLoading} disabled={!canSubmit}>
             {isLoading ? "" : "Generate Now"}
           </Button>
         )}

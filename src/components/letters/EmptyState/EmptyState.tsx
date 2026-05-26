@@ -13,14 +13,10 @@ export function EmptyState() {
         <Icon name="cat" size={24} />
       </div>
       <p className={styles.subtitle}>
-        Generate your first AI-written cover letter — your goal is{" "}
-        {GOAL_LETTERS} applications to maximize your chances of getting hired.
+        Generate your first AI-written cover letter — your goal is {GOAL_LETTERS} applications to
+        maximize your chances of getting hired.
       </p>
-      <ButtonLink
-        href="/new"
-        leadingIcon={<Icon name="plus" />}
-        className={styles.action}
-      >
+      <ButtonLink href="/new" leadingIcon={<Icon name="plus" />} className={styles.action}>
         Create your first one
       </ButtonLink>
     </section>

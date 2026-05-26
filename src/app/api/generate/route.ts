@@ -40,10 +40,7 @@ export async function POST(request: NextRequest) {
     return textStream(stream, "openai");
   } catch (error) {
     if (error instanceof OpenAI.APIError) {
-      return jsonError(
-        `OpenAI ${error.status ?? "error"}: ${error.message}`,
-        error.status ?? 502,
-      );
+      return jsonError(`OpenAI ${error.status ?? "error"}: ${error.message}`, error.status ?? 502);
     }
     if ((error as Error)?.name === "AbortError") {
       return new Response(null, { status: 499 });

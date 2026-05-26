@@ -71,7 +71,8 @@
 }
 
 @keyframes orbFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(10px);
     opacity: 1;
   }

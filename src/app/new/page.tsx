@@ -5,10 +5,7 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Title } from "@/components/ui/Title";
 import { LetterForm } from "@/components/letters/LetterForm";
-import {
-  LetterPreview,
-  type PreviewStatus,
-} from "@/components/letters/LetterPreview";
+import { LetterPreview, type PreviewStatus } from "@/components/letters/LetterPreview";
 import { GoalBanner } from "@/components/letters/GoalBanner";
 import { useLettersContext } from "@/lib/letters/LettersContext";
 import { generateCoverLetter, GenerationError } from "@/lib/ai/client";
@@ -118,20 +115,12 @@ export default function NewLetterPage() {
                   status={status}
                 />
               </div>
-              <LetterPreview
-                status={status}
-                text={preview}
-                errorMessage={errorMessage}
-              />
+              <LetterPreview status={status} text={preview} errorMessage={errorMessage} />
             </div>
 
             {showBanner && (
               <div className={styles.bannerWrap}>
-                <GoalBanner
-                  count={count}
-                  variant="general"
-                  onCreateNew={handleCreateNew}
-                />
+                <GoalBanner count={count} variant="general" onCreateNew={handleCreateNew} />
               </div>
             )}
           </div>
@@ -142,9 +131,7 @@ export default function NewLetterPage() {
 }
 
 function buildHeading(values: LetterInput): React.ReactNode {
-  const parts = [values.jobTitle, values.company]
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const parts = [values.jobTitle, values.company].map((s) => s.trim()).filter(Boolean);
   if (parts.length === 0) {
     return <span className={styles.titleMuted}>New application</span>;
   }

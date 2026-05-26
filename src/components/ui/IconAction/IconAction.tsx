@@ -8,8 +8,7 @@ import styles from "./IconAction.module.css";
  *  - `success` — brand green; pair with a "done" affordance like Copied!. */
 export type IconActionTone = "neutral" | "danger" | "success";
 
-export interface IconActionProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
+export interface IconActionProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   tone?: IconActionTone;

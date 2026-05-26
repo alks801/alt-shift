@@ -36,7 +36,7 @@
      don't blow out the card width. */
   overflow-wrap: anywhere;
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
 }
 
 .footer {
@@ -45,4 +45,3 @@
   justify-content: space-between;
   gap: var(--space-3);
 }
-

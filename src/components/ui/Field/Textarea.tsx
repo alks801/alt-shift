@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  useId,
-  type ReactNode,
-  type TextareaHTMLAttributes,
-} from "react";
+import { forwardRef, useId, type ReactNode, type TextareaHTMLAttributes } from "react";
 import { cx } from "@/lib/cx";
 import styles from "./Field.module.css";
 
@@ -25,69 +20,66 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   grow?: boolean;
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  function Textarea(
-    {
-      label,
-      id,
-      className,
-      maxLength,
-      softMaxLength,
-      showCounter,
-      grow,
-      value,
-      defaultValue,
-      ...rest
-    },
-    ref,
-  ) {
-    const autoId = useId();
-    const inputId = id ?? autoId;
-
-    const currentLength =
-      typeof value === "string"
-        ? value.length
-        : typeof defaultValue === "string"
-          ? defaultValue.length
-          : 0;
-
-    const counterLimit = softMaxLength ?? maxLength;
-    const overSoftLimit =
-      typeof softMaxLength === "number" && currentLength > softMaxLength;
-
-    return (
-      <div className={cx(styles.field, grow && styles.grow)}>
-        <label htmlFor={inputId} className={styles.label}>
-          {label}
-        </label>
-        <textarea
-          ref={ref}
-          id={inputId}
-          maxLength={maxLength}
-          className={cx(
-            styles.control,
-            styles.textarea,
-            "scrollbarThin",
-            overSoftLimit && styles.invalid,
-            className,
-          )}
-          aria-invalid={overSoftLimit || undefined}
-          value={value}
-          defaultValue={defaultValue}
-          {...rest}
-        />
-        {showCounter && counterLimit && (
-          <div className={styles.footer}>
-            <span
-              className={styles.counter}
-              data-over-limit={overSoftLimit || undefined}
-              aria-live="polite"
-            >
-              {currentLength}/{counterLimit}
-            </span>
-          </div>
-        )}
-      </div>
-    );
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
+  {
+    label,
+    id,
+    className,
+    maxLength,
+    softMaxLength,
+    showCounter,
+    grow,
+    value,
+    defaultValue,
+    ...rest
   },
-);
+  ref,
+) {
+  const autoId = useId();
+  const inputId = id ?? autoId;
+
+  const currentLength =
+    typeof value === "string"
+      ? value.length
+      : typeof defaultValue === "string"
+        ? defaultValue.length
+        : 0;
+
+  const counterLimit = softMaxLength ?? maxLength;
+  const overSoftLimit = typeof softMaxLength === "number" && currentLength > softMaxLength;
+
+  return (
+    <div className={cx(styles.field, grow && styles.grow)}>
+      <label htmlFor={inputId} className={styles.label}>
+        {label}
+      </label>
+      <textarea
+        ref={ref}
+        id={inputId}
+        maxLength={maxLength}
+        className={cx(
+          styles.control,
+          styles.textarea,
+          "scrollbarThin",
+          overSoftLimit && styles.invalid,
+          className,
+        )}
+        aria-invalid={overSoftLimit || undefined}
+        value={value}
+        defaultValue={defaultValue}
+        {...rest}
+      />
+      {showCounter && counterLimit && (
+        <div className={styles.footer}>
+          <span
+            className={styles.counter}
+            data-over-limit={overSoftLimit || undefined}
+            aria-live="polite"
+          >
+            {currentLength}/{counterLimit}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+});

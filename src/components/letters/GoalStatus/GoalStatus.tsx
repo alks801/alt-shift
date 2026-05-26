@@ -26,11 +26,7 @@ export function GoalStatus({ count }: GoalStatusProps) {
         {value}/{goal} applications generated
       </span>
       {reached ? (
-        <span
-          className={styles.badge}
-          role="img"
-          aria-label={`Goal reached: ${label}`}
-        >
+        <span className={styles.badge} role="img" aria-label={`Goal reached: ${label}`}>
           <Icon name="check" size={20} />
         </span>
       ) : (

@@ -35,11 +35,7 @@ export default function DashboardPage() {
               {isEmpty ? (
                 <EmptyState />
               ) : (
-                <LetterGrid
-                  letters={letters}
-                  hydrated={hydrated}
-                  onDelete={deleteLetter}
-                />
+                <LetterGrid letters={letters} hydrated={hydrated} onDelete={deleteLetter} />
               )}
             </section>
             {showBanner && <GoalBanner count={count} variant="today" />}

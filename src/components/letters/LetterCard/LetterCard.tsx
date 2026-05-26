@@ -28,10 +28,7 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
   return (
     <article
       className={styles.card}
-      aria-label={
-        [letter.jobTitle, letter.company].filter(Boolean).join(", ") ||
-        "Cover letter"
-      }
+      aria-label={[letter.jobTitle, letter.company].filter(Boolean).join(", ") || "Cover letter"}
     >
       <div className={styles.body}>{letter.body}</div>
       <div className={styles.footer}>

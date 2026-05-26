@@ -1,6 +1,7 @@
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FlatCompat } from "@eslint/eslintrc";
+import prettierConfig from "eslint-config-prettier";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,6 +23,10 @@ const eslintConfig = [
       ],
     },
   },
+  // Must be last: turns off ESLint rules that would conflict with Prettier
+  // so the two tools have non-overlapping responsibilities (Prettier owns
+  // formatting, ESLint owns code quality).
+  prettierConfig,
 ];
 
 export default eslintConfig;
