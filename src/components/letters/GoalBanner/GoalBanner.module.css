@@ -50,5 +50,13 @@
        drives the height when text wraps. */
     height: auto;
     padding: var(--space-7) var(--space-5);
+    /* Heading group / progress block sit closer together on phones. */
+    gap: var(--space-6);
+  }
+
+  /* Tap-friendly CTA stretches across the banner on phones. */
+  .cta {
+    width: 100%;
+    justify-content: center;
   }
 }

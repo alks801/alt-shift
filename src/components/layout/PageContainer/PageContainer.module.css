@@ -4,3 +4,11 @@
   margin: 0 auto;
   padding: 0 var(--layout-gutter);
 }
+
+/* Tighter gutters on phones — 32px eats too much of a 360px viewport
+   (= 18% gone before any content). */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+}

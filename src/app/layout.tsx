@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { LettersProvider } from "@/lib/letters/LettersContext";
 import "./globals.css";
@@ -35,6 +35,17 @@ export const metadata: Metadata = {
   title: "Alt+Shift — AI cover letters",
   description:
     "Generate sincere, tailored cover letters with AI. Track your progress toward your weekly application goal.",
+};
+
+/**
+ * Viewport. `width=device-width, initial-scale=1` is the responsive baseline;
+ * we don't lock zoom (`maximum-scale=1` etc.) because that breaks a11y
+ * (users with low vision rely on pinch-zoom on phones).
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

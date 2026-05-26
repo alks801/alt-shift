@@ -20,6 +20,13 @@ const EMPTY_FORM: LetterInput = {
   details: "",
 };
 
+/**
+ * When the form + preview are stacked (≤ tablet), the preview lives below
+ * the form and is easy to miss after pressing Generate. Scroll it into
+ * view so the user sees the loading state immediately.
+ */
+const STACKED_LAYOUT_QUERY = "(max-width: 960px)";
+
 export default function NewLetterPage() {
   const { letters, createLetter, updateLetterBody } = useLettersContext();
   const [values, setValues] = useState<LetterInput>(EMPTY_FORM);
@@ -28,6 +35,7 @@ export default function NewLetterPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const sessionLetterIdRef = useRef<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
@@ -50,6 +58,17 @@ export default function NewLetterPage() {
     setStatus("loading");
     setPreview("");
     setErrorMessage(undefined);
+
+    // Pull the preview into view on stacked layouts (≤ tablet). On desktop
+    // the preview is already visible next to the form, so scrolling would
+    // be jarring.
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia(STACKED_LAYOUT_QUERY).matches &&
+      previewRef.current
+    ) {
+      previewRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     try {
       // No `onChunk` — we wait for the full letter to keep the loading state
@@ -115,7 +134,9 @@ export default function NewLetterPage() {
                   status={status}
                 />
               </div>
-              <LetterPreview status={status} text={preview} errorMessage={errorMessage} />
+              <div ref={previewRef} className={styles.previewColumn}>
+                <LetterPreview status={status} text={preview} errorMessage={errorMessage} />
+              </div>
             </div>
 
             {showBanner && (

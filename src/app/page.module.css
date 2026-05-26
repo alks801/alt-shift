@@ -20,10 +20,17 @@
   margin-bottom: var(--space-6);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: var(--space-3);
+  }
+
+  /* Stretching the CTA gives it a comfortable tap target and matches the
+     full-width "Create your first one" button in the empty state. */
+  .cta {
+    width: 100%;
+    justify-content: center;
   }
 }

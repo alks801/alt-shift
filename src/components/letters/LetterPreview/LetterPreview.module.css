@@ -87,3 +87,13 @@
     animation: none;
   }
 }
+
+@media (max-width: 640px) {
+  .wrap {
+    /* 460 → 320 on phones: the preview is now stacked below the form, so a
+       desktop-sized panel is overkill. Generated text can still grow up to
+       this min-height before scrolling, so the layout doesn't yo-yo. */
+    min-height: 320px;
+    padding: var(--space-5);
+  }
+}

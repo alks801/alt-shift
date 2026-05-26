@@ -42,15 +42,48 @@
   flex: 1;
 }
 
+/* Plain wrapper around <LetterPreview> so the page can scroll it into view
+   on mobile via a ref. Made into a flex column so its child preview still
+   stretches to fill the desktop grid cell as if it were a direct grid
+   child. */
+.previewColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.previewColumn > * {
+  flex: 1;
+  min-height: 0;
+}
+
 .bannerWrap {
   margin-top: var(--space-4);
 }
 
-@media (max-width: 880px) {
+/* Stack the form + preview on tablet and below — two 480-ish columns
+   feel cramped once the viewport drops under ~960. */
+@media (max-width: 960px) {
   .layout {
-    /* Stack on mobile and drop the desktop cap — stacked columns need
-       natural heights. */
     grid-template-columns: 1fr;
     height: auto;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .layout {
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  .formColumn {
+    gap: var(--space-3);
+  }
+
+  .title {
+    /* Pull the underline closer to the heading on phones where vertical
+       space is more precious. */
+    padding-bottom: var(--space-3);
   }
 }

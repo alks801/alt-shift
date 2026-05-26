@@ -27,7 +27,7 @@
   flex: 1;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 640px) {
   .row {
     flex-direction: column;
   }

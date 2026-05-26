@@ -3,3 +3,13 @@
   height: auto;
   user-select: none;
 }
+
+/* Scale down on phones (48 → 32px tall, width auto via `height: auto` +
+   intrinsic aspect ratio). Keeps the header from monopolising the row
+   on narrow viewports. */
+@media (max-width: 640px) {
+  .logo {
+    width: auto;
+    max-height: 32px;
+  }
+}

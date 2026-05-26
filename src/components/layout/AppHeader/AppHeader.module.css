@@ -42,7 +42,16 @@
   .header {
     padding: var(--space-5) 0 var(--space-3);
   }
+
   .inner {
-    padding: 0 var(--space-5);
+    /* No horizontal padding here — `PageContainer` already supplies the
+       16px mobile gutter, and the header inner uses its own max-width that
+       matches the container width. */
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .right {
+    gap: var(--space-3);
   }
 }

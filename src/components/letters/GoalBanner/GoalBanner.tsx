@@ -52,11 +52,11 @@ export function GoalBanner({ count, variant, onCreateNew }: GoalBannerProps) {
         </Title>
         <p className={styles.subtitle}>{subtitle}</p>
         {onCreateNew ? (
-          <Button size="lg" onClick={onCreateNew} leadingIcon={ctaIcon}>
+          <Button size="lg" onClick={onCreateNew} leadingIcon={ctaIcon} className={styles.cta}>
             Create New
           </Button>
         ) : (
-          <ButtonLink href="/new" size="lg" leadingIcon={ctaIcon}>
+          <ButtonLink href="/new" size="lg" leadingIcon={ctaIcon} className={styles.cta}>
             Create New
           </ButtonLink>
         )}

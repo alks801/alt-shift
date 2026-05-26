@@ -26,7 +26,7 @@ export default function DashboardPage() {
           <div className={styles.page}>
             <div className={styles.header}>
               <Title size="lg">Applications</Title>
-              <ButtonLink href="/new" leadingIcon={<Icon name="plus" />}>
+              <ButtonLink href="/new" leadingIcon={<Icon name="plus" />} className={styles.cta}>
                 Create New
               </ButtonLink>
             </div>
