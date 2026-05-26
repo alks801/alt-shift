@@ -15,17 +15,19 @@ cp .env.example .env.local   # leave OPENAI_API_KEY empty to use the built-in mo
 npm run dev                  # http://localhost:3000
 ```
 
-| Script                  | What it does                               |
-| ----------------------- | ------------------------------------------ |
-| `npm run dev`           | Next.js dev server                         |
-| `npm run build`         | Production build                           |
-| `npm run typecheck`     | `tsc --noEmit`                             |
-| `npm run lint`          | ESLint (`next/core-web-vitals` + TS)       |
-| `npm run format`        | Prettier write                             |
-| `npm run format:check`  | Prettier check (CI-safe)                   |
-| `npm test`              | Vitest + Testing Library (jsdom)           |
-| `npm run test:coverage` | Vitest with v8 coverage report (HTML+text) |
-| `npm run test:e2e`      | Playwright E2E tests (Chromium)            |
+| Script                    | What it does                               |
+| ------------------------- | ------------------------------------------ |
+| `npm run dev`             | Next.js dev server                         |
+| `npm run build`           | Production build                           |
+| `npm run typecheck`       | `tsc --noEmit`                             |
+| `npm run lint`            | ESLint (`next/core-web-vitals` + TS)       |
+| `npm run format`          | Prettier write                             |
+| `npm run format:check`    | Prettier check (CI-safe)                   |
+| `npm test`                | Vitest + Testing Library (jsdom)           |
+| `npm run test:coverage`   | Vitest with v8 coverage report (HTML+text) |
+| `npm run test:e2e`        | Playwright E2E tests (Chromium)            |
+| `npm run storybook`       | Storybook dev server (port 6006)           |
+| `npm run build-storybook` | Static Storybook build                     |
 
 ## Stack
 
@@ -39,9 +41,10 @@ npm run dev                  # http://localhost:3000
   reloads, works offline, no backend.
 - **`openai` SDK** server-side only; a randomized mock when the key is
   missing.
-- **Vitest + Testing Library** (jsdom). **Prettier + ESLint** (no overlap via
-  `eslint-config-prettier`). **Husky + lint-staged + commitlint**
-  (conventional commits).
+- **Vitest + Testing Library** (jsdom). **Playwright** for E2E.
+  **Storybook 10** for component catalogue.
+- **Prettier + ESLint** (no overlap via `eslint-config-prettier`).
+  **Husky + lint-staged + commitlint** (conventional commits).
 
 ## Project structure
 
@@ -234,6 +237,20 @@ Benefits:
   making DOM inspection self-documenting.
 - **`byKey` for dynamic lists** — `cards(letter.id)` generates unique
   selectors per letter without manual string interpolation.
+
+### Storybook
+
+Component catalogue at `http://localhost:6006` (`npm run storybook`).
+14 stories across two groups:
+
+**`ui/`** — `Button` (8 states), `Input` (4), `Textarea` (4 incl.
+over-limit), `Icon` (catalog + danger tint), `Title` (3 sizes),
+`ProgressDots` (dots / bars, 0→5 progression), `IconAction` (3 tones),
+`CopyButton`, `ConfirmDialog` (danger / neutral).
+
+**`letters/`** — `LetterPreview` (idle / loading / ready / error),
+`LetterCard` (short / long text), `GoalBanner` (dashboard / form,
+1–4 progress), `GoalStatus` (0 / 3 / 5 / 7), `EmptyState`.
 
 ## AI workflow
 

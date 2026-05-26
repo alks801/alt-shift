@@ -8,6 +8,9 @@ coverage
 test-results/
 playwright-report/
 
+# storybook
+storybook-static/
+
 # next.js
 .next/
 out/
@@ -34,3 +37,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+*storybook.log
+storybook-static

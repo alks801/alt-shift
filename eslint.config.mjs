@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -20,6 +23,7 @@ const eslintConfig = [
       "e2e/**",
       "playwright-report/**",
       "test-results/**",
+      "storybook-static/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
@@ -30,11 +34,11 @@ const eslintConfig = [
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
     },
-  },
-  // Must be last: turns off ESLint rules that would conflict with Prettier
+  }, // Must be last: turns off ESLint rules that would conflict with Prettier
   // so the two tools have non-overlapping responsibilities (Prettier owns
   // formatting, ESLint owns code quality).
   prettierConfig,
+  ...storybook.configs["flat/recommended"],
 ];
 
 export default eslintConfig;
