@@ -74,8 +74,13 @@ export default function NewLetterPage() {
       }
 
       // First generation → create; "Try Again" → overwrite (avoids draft flood).
-      if (sessionLetterIdRef.current) {
-        updateLetterBody(sessionLetterIdRef.current, trimmed);
+      // If the session letter was deleted (e.g. from another tab), fall back
+      // to create so "Try Again" doesn't silently no-op against a stale id.
+      const sessionId = sessionLetterIdRef.current;
+      const sessionLetterExists = sessionId !== null && letters.some((l) => l.id === sessionId);
+
+      if (sessionId && sessionLetterExists) {
+        updateLetterBody(sessionId, trimmed);
       } else {
         const letter = createLetter({
           jobTitle: values.jobTitle.trim(),

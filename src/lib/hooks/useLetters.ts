@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { STORAGE_KEY } from "@/lib/constants";
 import { loadLetters, saveLetters } from "@/lib/storage/letters";
 import type { Letter } from "@/lib/types";
 
@@ -41,6 +42,21 @@ export function useLetters(): LettersApi {
     if (!hydrated) return;
     saveLetters(letters);
   }, [letters, hydrated]);
+
+  /**
+   * Cross-tab sync. Without this, a delete in tab B leaves tab A with a
+   * stale list; if tab A then mutates a now-deleted letter, the write
+   * resurrects it. `storage` events fire only in other tabs, so there is
+   * no echo loop with the save effect above.
+   */
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY) return;
+      setLetters(loadLetters());
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
 
   const createLetter = useCallback((input: NewLetterInput): Letter => {
     const now = Date.now();

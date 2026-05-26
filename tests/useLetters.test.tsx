@@ -2,6 +2,28 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { useLetters } from "@/lib/hooks/useLetters";
 import { loadLetters } from "@/lib/storage/letters";
+import { STORAGE_KEY } from "@/lib/constants";
+
+/** Simulate another tab: write storage, then deliver the event jsdom skips. */
+function writeFromOtherTab(payload: string | null) {
+  if (payload === null) window.localStorage.removeItem(STORAGE_KEY);
+  else window.localStorage.setItem(STORAGE_KEY, payload);
+  window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY, newValue: payload }));
+}
+
+const ONE_LETTER = JSON.stringify({
+  version: 1,
+  letters: [
+    {
+      id: "from-other-tab",
+      jobTitle: "Engineer",
+      company: "Linear",
+      body: "Hello.",
+      createdAt: 1,
+      updatedAt: 1,
+    },
+  ],
+});
 
 describe("useLetters", () => {
   it("hydrates from localStorage and exposes empty state", async () => {
@@ -47,6 +69,32 @@ describe("useLetters", () => {
     });
     expect(second.result.current.letters).toEqual([]);
     expect(loadLetters()).toEqual([]);
+  });
+
+  describe("cross-tab sync", () => {
+    it("syncs writes and deletes from another tab", async () => {
+      const { result } = renderHook(() => useLetters());
+      await waitFor(() => expect(result.current.hydrated).toBe(true));
+      expect(result.current.letters).toEqual([]);
+
+      act(() => writeFromOtherTab(ONE_LETTER));
+      await waitFor(() => expect(result.current.letters).toHaveLength(1));
+
+      act(() => writeFromOtherTab(JSON.stringify({ version: 1, letters: [] })));
+      await waitFor(() => expect(result.current.letters).toEqual([]));
+    });
+
+    it("ignores storage events for unrelated keys", async () => {
+      window.localStorage.setItem(STORAGE_KEY, ONE_LETTER);
+      const { result } = renderHook(() => useLetters());
+      await waitFor(() => expect(result.current.letters).toHaveLength(1));
+
+      act(() => {
+        window.dispatchEvent(new StorageEvent("storage", { key: "other-key" }));
+      });
+
+      expect(result.current.letters).toHaveLength(1);
+    });
   });
 
   it("does not overwrite stored letters during the initial hydration commit", async () => {
