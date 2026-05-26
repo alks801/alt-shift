@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { IconAction } from "@/components/ui/IconAction";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
@@ -19,27 +18,23 @@ const PLACEHOLDER = "Your personalized job application will appear here…";
 const DEFAULT_ERROR = "Something went wrong. Please try again.";
 
 /**
- * Right-hand preview pane.
- *
- * States:
- *   idle    — placeholder copy + disabled "Copy" affordance.
- *   loading — floating brand orb, no body text (we intentionally don't
- *             reveal partial output mid-generation; cleaner UX, no flicker).
- *   ready   — full letter + active "Copy" button.
- *   error   — alert with retry hint.
+ * Right-hand preview pane. Owns the visual chrome (wrap, footer, live
+ * region) and delegates the state-driven content area to `PreviewContent`.
  */
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
   const { copied, copy } = useCopyToClipboard();
   const showFooter = status !== "loading" && status !== "error";
 
+  const handleCopy = () => copy(text);
+
   return (
     <div className={styles.wrap} aria-live="polite">
-      {renderBody(status, text, errorMessage)}
+      <PreviewContent status={status} text={text} errorMessage={errorMessage} />
 
       {showFooter && (
         <div className={styles.footer}>
           <IconAction
-            onClick={() => copy(text)}
+            onClick={handleCopy}
             disabled={!text}
             tone={copied ? "success" : "neutral"}
             trailingIcon={<Icon name={copied ? "check" : "copy"} size={20} />}
@@ -52,11 +47,22 @@ export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps
   );
 }
 
-function renderBody(
-  status: PreviewStatus,
-  text: string,
-  errorMessage: string | undefined,
-): ReactNode {
+interface PreviewContentProps {
+  status: PreviewStatus;
+  text: string;
+  errorMessage?: string;
+}
+
+/**
+ * State-driven content area inside `LetterPreview`. Kept as a separate
+ * component (rather than inline ternaries) so each state is read like a
+ * dedicated little screen:
+ *   - loading → floating brand orb (no partial text — calmer UX, no flicker).
+ *   - error   → alert with retry hint.
+ *   - ready   → full letter, scrollable.
+ *   - idle    → placeholder copy.
+ */
+function PreviewContent({ status, text, errorMessage }: PreviewContentProps) {
   if (status === "loading") {
     return (
       <div className={styles.loading} aria-label="Generating letter">
@@ -64,6 +70,7 @@ function renderBody(
       </div>
     );
   }
+
   if (status === "error") {
     return (
       <div className={styles.error} role="alert">
@@ -71,8 +78,10 @@ function renderBody(
       </div>
     );
   }
+
   if (text) {
     return <div className={cx(styles.body, "scrollbarThin")}>{text}</div>;
   }
+
   return <p className={styles.placeholder}>{PLACEHOLDER}</p>;
 }

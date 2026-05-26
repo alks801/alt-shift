@@ -15,15 +15,18 @@ interface LetterCardProps {
 
 const ACTION_ICON_SIZE = 20;
 
-/** Collapse blank lines so the preview reads as tight prose — the original
- *  letter (with paragraph breaks) is still what gets copied to clipboard. */
-function previewText(body: string): string {
-  return body.replace(/\n{2,}/g, "\n");
-}
 
 export function LetterCard({ letter, onDelete }: LetterCardProps) {
   const { copied, copy } = useCopyToClipboard();
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const handleCopy = () => copy(letter.body);
+  const handleAskDelete = () => setConfirmOpen(true);
+  const handleCancelDelete = () => setConfirmOpen(false);
+  const handleConfirmDelete = () => {
+    setConfirmOpen(false);
+    onDelete(letter.id);
+  };
 
   return (
     <article
@@ -38,14 +41,14 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
         <IconAction
           tone="danger"
           leadingIcon={<Icon name="trash" size={ACTION_ICON_SIZE} />}
-          onClick={() => setConfirmOpen(true)}
+          onClick={handleAskDelete}
         >
           Delete
         </IconAction>
         <IconAction
           tone={copied ? "success" : "neutral"}
           trailingIcon={<Icon name={copied ? "check" : "copy"} size={ACTION_ICON_SIZE} />}
-          onClick={() => copy(letter.body)}
+          onClick={handleCopy}
         >
           {copied ? "Copied!" : "Copy to clipboard"}
         </IconAction>
@@ -58,11 +61,8 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
         confirmLabel="Delete"
         cancelLabel="Keep it"
         tone="danger"
-        onConfirm={() => {
-          setConfirmOpen(false);
-          onDelete(letter.id);
-        }}
-        onCancel={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
       />
     </article>
   );

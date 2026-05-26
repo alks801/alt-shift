@@ -66,13 +66,17 @@ export function ConfirmDialog({
 
   if (!open || typeof document === "undefined") return null;
 
+  /** Backdrop dismiss: only when the click started directly on the backdrop
+   *  (not on the dialog itself). Using `onMouseDown` instead of `onClick`
+   *  prevents a drag-out from inside the dialog from closing it. */
+  const handleBackdropMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onCancel();
+    }
+  };
+
   return createPortal(
-    <div
-      className={styles.backdrop}
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onCancel();
-      }}
-    >
+    <div className={styles.backdrop} onMouseDown={handleBackdropMouseDown}>
       <div
         ref={dialogRef}
         role="alertdialog"
