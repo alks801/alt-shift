@@ -2,6 +2,7 @@
 
 import { CopyButton } from "@/components/ui/CopyButton";
 import { cx } from "@/lib/cx";
+import { markers } from "@/lib/markers";
 import styles from "./LetterPreview.module.css";
 
 export type PreviewStatus = "idle" | "loading" | "ready" | "error";
@@ -14,17 +15,18 @@ interface LetterPreviewProps {
 
 const PLACEHOLDER = "Your personalized job application will appear here…";
 const DEFAULT_ERROR = "Something went wrong. Please try again.";
+const m = markers.newLetter.preview;
 
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
   const showFooter = status !== "loading" && status !== "error";
 
   return (
-    <div className={styles.wrap} aria-live="polite">
+    <div className={styles.wrap} aria-live="polite" {...m.nodeProps}>
       <PreviewContent status={status} text={text} errorMessage={errorMessage} />
 
       {showFooter && (
         <div className={styles.footer}>
-          <CopyButton text={text} />
+          <CopyButton text={text} {...m.copyButton.nodeProps} />
         </div>
       )}
     </div>
@@ -40,7 +42,7 @@ interface PreviewContentProps {
 function PreviewContent({ status, text, errorMessage }: PreviewContentProps) {
   if (status === "loading") {
     return (
-      <div className={styles.loading} aria-label="Generating letter">
+      <div className={styles.loading} aria-label="Generating letter" {...m.loading.nodeProps}>
         <div className={styles.orb} role="presentation" />
       </div>
     );
@@ -48,15 +50,23 @@ function PreviewContent({ status, text, errorMessage }: PreviewContentProps) {
 
   if (status === "error") {
     return (
-      <div className={styles.error} role="alert">
+      <div className={styles.error} role="alert" {...m.error.nodeProps}>
         <p>{errorMessage ?? DEFAULT_ERROR}</p>
       </div>
     );
   }
 
   if (text) {
-    return <div className={cx(styles.body, "scrollbarThin")}>{text}</div>;
+    return (
+      <div className={cx(styles.body, "scrollbarThin")} {...m.body.nodeProps}>
+        {text}
+      </div>
+    );
   }
 
-  return <p className={styles.placeholder}>{PLACEHOLDER}</p>;
+  return (
+    <p className={styles.placeholder} {...m.placeholder.nodeProps}>
+      {PLACEHOLDER}
+    </p>
+  );
 }

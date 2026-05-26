@@ -5,6 +5,7 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { Icon } from "@/components/ui/Icon";
 import { IconAction } from "@/components/ui/IconAction";
+import { markers } from "@/lib/markers";
 import type { Letter } from "@/lib/types";
 import styles from "./LetterCard.module.css";
 
@@ -26,13 +27,15 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
   };
 
   const paragraphs = letter.body.split(/\n\n+/);
+  const m = markers.dashboard.letterGrid.cards(letter.id);
 
   return (
     <article
       className={styles.card}
       aria-label={[letter.jobTitle, letter.company].filter(Boolean).join(", ") || "Cover letter"}
+      {...m.nodeProps}
     >
-      <div className={styles.body}>
+      <div className={styles.body} {...m.body.nodeProps}>
         {paragraphs.map((p, i) => (
           <p key={i} className={styles.paragraph}>
             {p}
@@ -44,10 +47,11 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
           tone="danger"
           leadingIcon={<Icon name="trash" size={ACTION_ICON_SIZE} />}
           onClick={handleAskDelete}
+          {...m.deleteButton.nodeProps}
         >
           Delete
         </IconAction>
-        <CopyButton text={letter.body} />
+        <CopyButton text={letter.body} {...m.copyButton.nodeProps} />
       </div>
 
       <ConfirmDialog

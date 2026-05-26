@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
 import { Icon } from "@/components/ui/Icon";
 import { DETAILS_MAX_LENGTH, STRENGTHS_MAX_LENGTH } from "@/lib/constants";
+import { markers } from "@/lib/markers";
 import type { LetterInput } from "@/lib/types";
 import styles from "./LetterForm.module.css";
 
@@ -14,6 +15,8 @@ interface LetterFormProps {
   onSubmit: () => void;
   status: "idle" | "loading" | "ready" | "error";
 }
+
+const m = markers.newLetter.form;
 
 export function LetterForm({ values, onChange, onSubmit, status }: LetterFormProps) {
   const isLoading = status === "loading";
@@ -35,7 +38,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
   const canSubmit = hasRequired && !detailsOverLimit;
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form className={styles.form} onSubmit={handleSubmit} noValidate {...m.nodeProps}>
       <div className={styles.row}>
         <Input
           label="Job title"
@@ -45,6 +48,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
           autoComplete="organization-title"
           required
           disabled={isLoading}
+          {...m.jobTitle.nodeProps}
         />
         <Input
           label="Company"
@@ -54,6 +58,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
           autoComplete="organization"
           required
           disabled={isLoading}
+          {...m.company.nodeProps}
         />
       </div>
       <Input
@@ -63,6 +68,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
         placeholder="HTML, CSS and doing things in time"
         maxLength={STRENGTHS_MAX_LENGTH}
         disabled={isLoading}
+        {...m.strengths.nodeProps}
       />
       <Textarea
         label="Additional details"
@@ -74,6 +80,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
         grow
         rows={6}
         disabled={isLoading}
+        {...m.details.nodeProps}
       />
       <div className={styles.actions}>
         {isReady ? (
@@ -84,11 +91,19 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
             fullWidth
             leadingIcon={<Icon name="repeat" />}
             disabled={!canSubmit}
+            {...m.submit.nodeProps}
           >
             Try Again
           </Button>
         ) : (
-          <Button type="submit" size="lg" fullWidth loading={isLoading} disabled={!canSubmit}>
+          <Button
+            type="submit"
+            size="lg"
+            fullWidth
+            loading={isLoading}
+            disabled={!canSubmit}
+            {...m.submit.nodeProps}
+          >
             {isLoading ? "" : "Generate Now"}
           </Button>
         )}

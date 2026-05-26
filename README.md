@@ -25,6 +25,7 @@ npm run dev                  # http://localhost:3000
 | `npm run format:check`  | Prettier check (CI-safe)                   |
 | `npm test`              | Vitest + Testing Library (jsdom)           |
 | `npm run test:coverage` | Vitest with v8 coverage report (HTML+text) |
+| `npm run test:e2e`      | Playwright E2E tests (Chromium)            |
 
 ## Stack
 
@@ -66,7 +67,8 @@ src/
 │   └── types.ts
 └── styles/tokens.css          Colors, spacing, radii, typography, breakpoints
 
-tests/                          35 tests across 7 files (see "Testing" below)
+tests/                          38 unit tests across 8 files (see "Testing" below)
+e2e/                            17 Playwright E2E tests
 ```
 
 ## Decision log
@@ -180,7 +182,9 @@ for the icon link; not bumped to 44px to preserve the desktop visual.
 
 ## Testing
 
-35 tests across 7 files; `npm run test:coverage` reports ~65% statements
+### Unit tests (Vitest + Testing Library)
+
+38 tests across 8 files; `npm run test:coverage` reports ~65% statements
 (business logic — `useLetters`, `LetterForm`, `Textarea`, `GoalBanner`,
 `GoalStatus`, `LetterCard`, `LetterPreview` — sits at 80–100%).
 
@@ -188,9 +192,48 @@ Conventions: semantic queries (`getByRole` + accessible names), no
 snapshots, no over-mocking. Boundary cases at the soft limit, goal cap,
 and hydration race are explicitly covered.
 
-What's deliberately **not** tested: `src/app/**` (App Router glue is better
-served by E2E later), barrel `index.ts` files, the `Logo`/`PageContainer`
-wrappers.
+### E2E tests (Playwright)
+
+17 tests covering the full user journey in Chromium:
+
+- **Dashboard** — empty state, progress display, CTA navigation.
+- **Navigation** — logo, home icon, Create New.
+- **Form validation** — disabled button, soft limit counter.
+- **Generation flow** — happy path (generate → preview → dashboard),
+  "Try Again" deduplication, localStorage persistence across reloads.
+- **Delete flow** — confirm dialog deletes, cancel preserves.
+- **Goal progress** — banner appears below 5, hides at 5.
+
+Run `npm run test:e2e` (requires a dev server on port 3001 or let
+Playwright start one automatically).
+
+### Selector management — `marker-tree`
+
+E2E selectors are managed via
+[`marker-tree`](https://www.npmjs.com/package/marker-tree) — a single
+typed tree object that is shared between application code and tests.
+
+Components spread `{...m.nodeProps}` to emit `data-test` attributes;
+Playwright reads `m.selector` to locate elements. The tree lives in
+`src/lib/markers.ts` and mirrors the page hierarchy:
+
+```
+app
+├── header        (logo · goalStatus · homeLink)
+├── dashboard     (createNew · emptyState · letterGrid → cards(id) · goalBanner)
+├── newLetter     (form → jobTitle/company/strengths/details/submit · preview · goalBanner)
+└── confirmDialog (confirm · cancel)
+```
+
+Benefits:
+
+- **Single source of truth** — rename a node once, both markup and tests
+  update (TypeScript catches stale references at compile time).
+- **Hierarchical `data-test` values** — rendered as
+  `data-test="app/dashboard/letterGrid/cards/e2e-del/deleteButton"`,
+  making DOM inspection self-documenting.
+- **`byKey` for dynamic lists** — `cards(letter.id)` generates unique
+  selectors per letter without manual string interpolation.
 
 ## AI workflow
 

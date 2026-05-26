@@ -10,7 +10,10 @@ import { GoalBanner } from "@/components/letters/GoalBanner";
 import { LetterGrid } from "@/components/letters/LetterGrid";
 import { useLettersContext } from "@/lib/letters/LettersContext";
 import { GOAL_LETTERS } from "@/lib/constants";
+import { markers } from "@/lib/markers";
 import styles from "./page.module.css";
+
+const m = markers.dashboard;
 
 export default function DashboardPage() {
   const { letters, hydrated, deleteLetter } = useLettersContext();
@@ -21,12 +24,17 @@ export default function DashboardPage() {
   return (
     <>
       <AppHeader generatedCount={count} />
-      <main>
+      <main {...m.nodeProps}>
         <PageContainer>
           <div className={styles.page}>
             <div className={styles.header}>
               <Title size="lg">Applications</Title>
-              <ButtonLink href="/new" leadingIcon={<Icon name="plus" />} className={styles.cta}>
+              <ButtonLink
+                href="/new"
+                leadingIcon={<Icon name="plus" />}
+                className={styles.cta}
+                {...m.createNew.nodeProps}
+              >
                 Create New
               </ButtonLink>
             </div>

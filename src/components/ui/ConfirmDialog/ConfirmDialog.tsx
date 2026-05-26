@@ -5,7 +5,10 @@ import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
 import { Title } from "@/components/ui/Title";
 import { cx } from "@/lib/cx";
+import { markers } from "@/lib/markers";
 import styles from "./ConfirmDialog.module.css";
+
+const m = markers.confirmDialog;
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -95,6 +98,7 @@ export function ConfirmDialog({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         className={styles.dialog}
+        {...m.nodeProps}
       >
         <Title as="h2" size="sm" id={titleId}>
           {title}
@@ -105,13 +109,14 @@ export function ConfirmDialog({
           </p>
         )}
         <div className={styles.actions}>
-          <Button variant="secondary" onClick={onCancel}>
+          <Button variant="secondary" onClick={onCancel} {...m.cancel.nodeProps}>
             {cancelLabel}
           </Button>
           <Button
             ref={confirmButtonRef}
             onClick={onConfirm}
             className={cx(tone === "danger" && styles.danger)}
+            {...m.confirm.nodeProps}
           >
             {confirmLabel}
           </Button>

@@ -3,6 +3,7 @@ import { Icon } from "@/components/ui/Icon";
 import { ProgressDots } from "@/components/ui/ProgressDots";
 import { Title } from "@/components/ui/Title";
 import { GOAL_LETTERS } from "@/lib/constants";
+import { markers } from "@/lib/markers";
 import styles from "./GoalBanner.module.css";
 
 /** `general` — used on the new-letter form (CTA must reset the form,
@@ -29,25 +30,38 @@ export function GoalBanner({ count, variant, onCreateNew }: GoalBannerProps) {
   const value = Math.min(goal, count);
   const subtitle = SUBTITLE[variant];
   const ctaIcon = <Icon name="plus" size={24} />;
+  const m = variant === "general" ? markers.newLetter.goalBanner : markers.dashboard.goalBanner;
 
   return (
-    <section className={styles.banner} aria-labelledby="goal-banner-title">
+    <section className={styles.banner} aria-labelledby="goal-banner-title" {...m.nodeProps}>
       <div className={styles.header}>
         <Title as="h2" id="goal-banner-title">
           Hit your goal
         </Title>
         <p className={styles.subtitle}>{subtitle}</p>
         {onCreateNew ? (
-          <Button size="lg" onClick={onCreateNew} leadingIcon={ctaIcon} className={styles.cta}>
+          <Button
+            size="lg"
+            onClick={onCreateNew}
+            leadingIcon={ctaIcon}
+            className={styles.cta}
+            {...m.cta.nodeProps}
+          >
             Create New
           </Button>
         ) : (
-          <ButtonLink href="/new" size="lg" leadingIcon={ctaIcon} className={styles.cta}>
+          <ButtonLink
+            href="/new"
+            size="lg"
+            leadingIcon={ctaIcon}
+            className={styles.cta}
+            {...m.cta.nodeProps}
+          >
             Create New
           </ButtonLink>
         )}
       </div>
-      <div className={styles.progress}>
+      <div className={styles.progress} {...m.progress.nodeProps}>
         <ProgressDots
           value={value}
           total={goal}
