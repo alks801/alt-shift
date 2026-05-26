@@ -250,6 +250,35 @@ Built in **Cursor + Claude**.
   `IconButton`, etc.) or `<Link>`-around-`<Button>` antipatterns, I pushed
   back and removed them.
 
+## CI / CD
+
+Two GitHub Actions workflows live in `.github/workflows/`:
+
+### `ci.yml` — on every push / PR to `main`
+
+Prettier → ESLint → TypeScript → Vitest (unit) → Playwright (E2E) → `next build`.
+Catches formatting drift, type errors, and regressions before merge.
+
+### `deploy.yml` — manual (`workflow_dispatch`)
+
+1. Builds the Docker image (multi-stage, `standalone` output, ~120 MB).
+2. Pushes to GHCR (`ghcr.io/<owner>/alt-shift:<sha>`).
+3. SSHes into VPS and restarts the container.
+
+Required secrets: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`,
+optionally `OPENAI_API_KEY`.
+
+### Docker
+
+```bash
+docker build -t alt-shift .
+docker run -p 3000:3000 alt-shift
+```
+
+The Dockerfile uses a 3-stage build (`deps → build → prod`) with
+`node:20-alpine` and Next.js `output: "standalone"` for a minimal
+production image (~120 MB vs ~1 GB with full `node_modules`).
+
 ## Deploy to Vercel
 
 1. Push the repo to GitHub.
