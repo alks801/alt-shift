@@ -7,9 +7,7 @@
 }
 
 html {
-  /* Always reserve space for the vertical scrollbar (whether or not it's
-     visible). Stops the layout from shifting right when something locks
-     `body { overflow: hidden }` — e.g. opening the delete confirm dialog. */
+  /* Prevents layout shift when body scroll is locked (e.g. modal open). */
   scrollbar-gutter: stable;
 }
 
@@ -80,7 +78,6 @@ textarea {
   color: var(--color-ink-900);
 }
 
-/* Utility: visually hidden but accessible to AT */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -93,9 +90,6 @@ textarea {
   border: 0;
 }
 
-/* Utility: thin brand scrollbar — thumb only, no track background.
-   Apply to any scrollable element. Firefox uses `scrollbar-color`,
-   WebKit/Blink uses `::-webkit-scrollbar-*` pseudo-elements. */
 .scrollbarThin {
   scrollbar-width: thin;
   scrollbar-color: var(--color-ink-300) transparent;

@@ -2,8 +2,6 @@
   padding-bottom: var(--space-10);
 }
 
-/* Decorative overrides on top of the shared <Title /> primitive.
-   Type styles (size/weight/line-height) live on <Title> itself. */
 .title {
   padding-bottom: calc(var(--space-3) - 1px);
   border-bottom: 1px solid var(--color-border);
@@ -14,18 +12,12 @@
 }
 
 .layout {
-  /* Grid (not flex) for the two columns: `1fr 1fr` distributes free space
-     equally regardless of each child's intrinsic content or padding, which
-     flex' `flex-basis` algorithm can't always guarantee (a flex child's
-     padding can leak into its basis and skew the share). `minmax(0, 1fr)`
-     additionally prevents an `<input>`/heading min-content from stretching
-     its track. */
   display: grid;
+  /* Grid (not flex) — equal columns regardless of each child's intrinsic size. */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-7);
   margin-bottom: var(--space-7);
-  /* Hard cap so neither the textarea (grow) nor the preview (scrollable
-     body) can push the layout vertically — they fill or scroll instead. */
+  /* Fixed height — children fill or scroll, never push the layout taller. */
   height: 600px;
 }
 
@@ -35,17 +27,11 @@
   gap: var(--space-4);
 }
 
-/* Let the form grow to fill the column so `.actions { margin-top: auto }`
-   continues to pin the submit button to the bottom, aligned with the
-   preview's footer action. */
 .formColumn > form {
   flex: 1;
 }
 
-/* Plain wrapper around <LetterPreview> so the page can scroll it into view
-   on mobile via a ref. Made into a flex column so its child preview still
-   stretches to fill the desktop grid cell as if it were a direct grid
-   child. */
+/* Wrapper for scroll-into-view ref; flex column so the preview stretches. */
 .previewColumn {
   display: flex;
   flex-direction: column;
@@ -61,8 +47,6 @@
   margin-top: var(--space-4);
 }
 
-/* Stack the form + preview on tablet and below — two 480-ish columns
-   feel cramped once the viewport drops under ~960. */
 @media (max-width: 960px) {
   .layout {
     grid-template-columns: 1fr;
@@ -82,8 +66,6 @@
   }
 
   .title {
-    /* Pull the underline closer to the heading on phones where vertical
-       space is more precious. */
     padding-bottom: var(--space-3);
   }
 }

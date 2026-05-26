@@ -1,7 +1,6 @@
 .banner {
   background-color: var(--color-brand-50);
   border-radius: var(--radius-lg);
-  /* Figma: 376px tall, 54px vertical padding (off the 4px scale, so inline). */
   height: 376px;
   padding: 54px var(--space-7);
   text-align: center;
@@ -9,11 +8,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* 32 between the heading group and the progress indicator. */
   gap: var(--space-7);
 }
 
-/* Heading group: title + subtitle + CTA stay tight at 16. */
 .header {
   display: flex;
   flex-direction: column;
@@ -39,22 +36,16 @@
   font-size: var(--font-size-body);
   line-height: 28px;
   color: var(--color-text-muted);
-  /* Tabular numerals so the digit doesn't shift when the count ticks
-     (1 → 2 → 3) — purely cosmetic, doesn't change Figma alignment. */
   font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 640px) {
   .banner {
-    /* Drop the fixed desktop height on narrow viewports — the content
-       drives the height when text wraps. */
     height: auto;
     padding: var(--space-7) var(--space-5);
-    /* Heading group / progress block sit closer together on phones. */
     gap: var(--space-6);
   }
 
-  /* Tap-friendly CTA stretches across the banner on phones. */
   .cta {
     width: 100%;
     justify-content: center;

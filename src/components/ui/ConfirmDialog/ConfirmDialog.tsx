@@ -18,14 +18,6 @@ interface ConfirmDialogProps {
   onCancel: () => void;
 }
 
-/**
- * Accessible confirmation dialog.
- *
- * Renders into a portal so it sits above any stacking context, traps focus
- * inside the dialog, restores focus on close, and closes on Esc / backdrop
- * click. Uses ARIA roles instead of the native `<dialog>` for full styling
- * control and cross-browser parity (Safari's native dialog is finicky).
- */
 export function ConfirmDialog({
   open,
   title,
@@ -67,9 +59,7 @@ export function ConfirmDialog({
 
   if (!open || typeof document === "undefined") return null;
 
-  /** Backdrop dismiss: only when the click started directly on the backdrop
-   *  (not on the dialog itself). Using `onMouseDown` instead of `onClick`
-   *  prevents a drag-out from inside the dialog from closing it. */
+  /* onMouseDown (not onClick) — drag from dialog to backdrop won't dismiss. */
   const handleBackdropMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onCancel();

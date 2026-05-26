@@ -9,15 +9,7 @@ export const dynamic = "force-dynamic";
 
 const MOCK_TOKEN_DELAY_MS = 22;
 
-/**
- * Cover-letter generation endpoint.
- *
- * Streams plain text chunks (no SSE framing) so the client can simply read
- * the response body and append. When `OPENAI_API_KEY` is missing, the route
- * returns the same plain-text stream from a deterministic mock so the demo
- * is usable out of the box. Hard failures (bad input, model unreachable)
- * are returned as JSON so the client can surface them in the UI.
- */
+/** Plain-text stream; falls back to a deterministic mock when no API key. */
 export async function POST(request: NextRequest) {
   let input: unknown;
   try {
@@ -76,7 +68,6 @@ function textStream(body: ReadableStream<Uint8Array>, generator: string): Respon
   });
 }
 
-/** Stream the mock letter token-by-token to mimic a real model's latency. */
 function streamFromMock(input: LetterInput, signal: AbortSignal): ReadableStream<Uint8Array> {
   const text = buildMockLetter(input);
   const tokens = text.match(/\S+\s*|\n+/g) ?? [text];
@@ -105,8 +96,6 @@ async function streamFromOpenAI(
   const client = new OpenAI({ apiKey });
   const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
-  // Awaiting create() surfaces auth/quota/network errors before we start the
-  // response stream, so we can still return a proper JSON status to the UI.
   const completion = await client.chat.completions.create(
     {
       model,

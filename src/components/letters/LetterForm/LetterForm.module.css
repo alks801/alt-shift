@@ -11,15 +11,12 @@
 
 .row > * {
   flex: 1 1 0;
-  /* Inputs have an intrinsic min-content; reset so equal halves stay equal. */
   min-width: 0;
 }
 
 .actions {
   display: flex;
   gap: var(--space-3);
-  /* Pin to the bottom of the (stretched) form so the submit button stays
-     aligned with the preview's footer action when the preview grows. */
   margin-top: auto;
 }
 

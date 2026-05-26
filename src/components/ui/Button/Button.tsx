@@ -11,11 +11,7 @@ export interface ButtonStyleProps {
   fullWidth?: boolean;
 }
 
-/**
- * Returns the className string used by `<Button>`. Exposed so that
- * non-button elements (e.g. Next.js `<Link>`) can adopt the exact same
- * visual styling without rendering invalid `<a><button/></a>` markup.
- */
+/** Shared className builder — also used by `<ButtonLink>`. */
 export function buttonClassName({
   variant = "primary",
   size = "md",

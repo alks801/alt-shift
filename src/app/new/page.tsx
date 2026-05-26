@@ -20,11 +20,7 @@ const EMPTY_FORM: LetterInput = {
   details: "",
 };
 
-/**
- * When the form + preview are stacked (≤ tablet), the preview lives below
- * the form and is easy to miss after pressing Generate. Scroll it into
- * view so the user sees the loading state immediately.
- */
+/** Scroll-to-preview fires only when columns are stacked (≤ tablet). */
 const STACKED_LAYOUT_QUERY = "(max-width: 960px)";
 
 export default function NewLetterPage() {
@@ -45,8 +41,6 @@ export default function NewLetterPage() {
     setStatus("idle");
     setPreview("");
     setErrorMessage(undefined);
-    // Reset the session ref so the next generation creates a fresh letter
-    // (instead of overwriting the previous one via `updateLetterBody`).
     sessionLetterIdRef.current = null;
   };
 
@@ -59,9 +53,6 @@ export default function NewLetterPage() {
     setPreview("");
     setErrorMessage(undefined);
 
-    // Pull the preview into view on stacked layouts (≤ tablet). On desktop
-    // the preview is already visible next to the form, so scrolling would
-    // be jarring.
     if (
       typeof window !== "undefined" &&
       window.matchMedia(STACKED_LAYOUT_QUERY).matches &&
@@ -71,9 +62,6 @@ export default function NewLetterPage() {
     }
 
     try {
-      // No `onChunk` — we wait for the full letter to keep the loading state
-      // visually calm (floating orb). Showing partial output here was noisy
-      // and added little value once the orb animation was in place.
       const finalText = await generateCoverLetter(values, {
         signal: controller.signal,
       });
@@ -85,9 +73,7 @@ export default function NewLetterPage() {
         return;
       }
 
-      // First successful generation in this session creates a new letter.
-      // Subsequent "Try Again" presses overwrite the same letter so the
-      // dashboard doesn't fill up with discarded drafts.
+      // First generation → create; "Try Again" → overwrite (avoids draft flood).
       if (sessionLetterIdRef.current) {
         updateLetterBody(sessionLetterIdRef.current, trimmed);
       } else {
@@ -114,8 +100,6 @@ export default function NewLetterPage() {
 
   const heading = buildHeading(values);
   const count = letters.length;
-  // Banner only appears after a successful generation in this session,
-  // not just because there are pre-existing letters in storage.
   const showBanner = status === "ready" && count < GOAL_LETTERS;
 
   return (

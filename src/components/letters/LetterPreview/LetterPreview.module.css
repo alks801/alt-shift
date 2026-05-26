@@ -33,10 +33,6 @@
   max-width: 280px;
 }
 
-/*
- * Generation indicator — the brand orb gently floats up and down.
- * Opacity dips to 0.48 at the apex per design spec.
- */
 .orb {
   width: 80px;
   height: 80px;
@@ -50,11 +46,8 @@
 
 .body {
   flex: 1;
-  /* `min-height: 0` lets the flex item shrink below its content height
-     so that `overflow-y: auto` can actually scroll inside the wrap. */
   min-height: 0;
   overflow-y: auto;
-  /* Breathing room so the scrollbar thumb doesn't sit on top of the text. */
   padding-right: var(--space-3);
   color: var(--color-text);
   font-size: var(--font-size-body);
@@ -90,9 +83,6 @@
 
 @media (max-width: 640px) {
   .wrap {
-    /* 460 → 320 on phones: the preview is now stacked below the form, so a
-       desktop-sized panel is overkill. Generated text can still grow up to
-       this min-height before scrolling, so the layout doesn't yo-yo. */
     min-height: 320px;
     padding: var(--space-5);
   }

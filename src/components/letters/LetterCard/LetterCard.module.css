@@ -6,12 +6,8 @@
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
-  /* Strictly 240px per spec — never grows or shrinks even inside a
-     stretching grid row. */
   min-height: 240px;
   max-height: 240px;
-  /* Stops a long unbroken word inside the body from pushing this card
-     wider than its grid track. */
   min-width: 0;
   transition: background-color var(--transition-fast);
 }
@@ -32,8 +28,6 @@
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   white-space: pre-wrap;
-  /* Force-break super-long tokens (URLs, no-space pastes) so they
-     don't blow out the card width. */
   overflow-wrap: anywhere;
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);

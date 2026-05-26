@@ -16,18 +16,7 @@ interface GenerateOptions {
   onChunk?: (chunk: string) => void;
 }
 
-/**
- * Generate a cover letter via the server route.
- *
- * Returns the final concatenated text; chunks are pushed to `onChunk` as
- * they arrive so the UI can render progressively. Aborting the signal
- * resolves with the partial text accumulated so far (or throws AbortError
- * via `fetch` — callers should treat both as "cancelled").
- *
- * The function never silently swaps in a different generator on failure —
- * errors are surfaced to the caller as `GenerationError` so the UI can
- * present a clear retry affordance.
- */
+/** Streams a cover letter from `/api/generate`, returning the full text. */
 export async function generateCoverLetter(
   input: LetterInput,
   { signal, onChunk }: GenerateOptions = {},

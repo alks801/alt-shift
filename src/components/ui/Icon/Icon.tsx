@@ -2,16 +2,7 @@ import type { CSSProperties } from "react";
 import { cx } from "@/lib/cx";
 import styles from "./Icon.module.css";
 
-/**
- * Brand-owned icons that live as standalone SVG files under `public/`.
- *
- * One-colour icons are rendered via CSS `mask-image` so they inherit
- * `currentColor` from the surrounding text — this is what makes a Delete
- * button's icon turn red on hover, etc.
- *
- * Multi-colour icons (badges) are rendered via `background-image`, keeping
- * their baked-in palette; `currentColor` does not apply to them.
- */
+/* Mono icons use mask-image → inherit currentColor; coloured use background-image. */
 export type IconName = "home" | "plus" | "copy" | "trash" | "repeat" | "check" | "cat";
 
 /** Icons that carry their own colours and must not be tinted. */
@@ -22,11 +13,7 @@ interface IconProps {
   /** Pixel size for both width and height. Defaults to 18. */
   size?: number;
   className?: string;
-  /**
-   * When omitted the icon is purely decorative (`aria-hidden`). Provide a label
-   * for icons that carry standalone meaning — e.g. a status indicator with no
-   * accompanying text — so screen readers announce it.
-   */
+  /** Semantic label; omit for decorative icons (`aria-hidden`). */
   "aria-label"?: string;
 }
 

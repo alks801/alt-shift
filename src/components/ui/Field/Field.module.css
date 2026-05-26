@@ -13,9 +13,6 @@
 
 .control {
   width: 100%;
-  /* Native <input>/<textarea> have an intrinsic min-content that can push
-     a flex/grid parent wider than its computed share. Reset it so the
-     column always honours its flex basis. */
   min-width: 0;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
@@ -58,8 +55,8 @@
   border-color: var(--color-danger-300);
 }
 
-/* Repeat border-color so the focus state of an invalid field doesn't get
-   overridden by `.control:focus` (which has higher specificity than `.invalid`). */
+/* Specificity tie-breaker: .invalid:focus must re-assert its own border
+   to win over .control:focus above. */
 .invalid:focus {
   border-color: var(--color-danger-300);
   box-shadow: 0 0 0 4px var(--color-danger-100);
@@ -69,12 +66,9 @@
   min-height: 140px;
   resize: none;
   font-family: inherit;
-  /* Roomier padding than a single-line input (8/12 → 12/14). */
   padding: var(--space-3) 14px;
 }
 
-/* Applied to the Field wrapper when `grow` is passed — lets the textarea
-   take all remaining vertical space inside its parent flex column. */
 .grow {
   flex: 1;
   min-height: 0;
@@ -89,8 +83,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* Reserve baseline space (matches counter line-height) so the submit
-     button below doesn't jump when the counter appears. */
+  /* Reserve space so the submit button doesn't jump when the counter appears. */
   min-height: 20px;
 }
 

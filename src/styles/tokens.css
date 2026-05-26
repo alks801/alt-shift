@@ -107,18 +107,8 @@
   --layout-max-width: 1184px;
   --layout-gutter: var(--space-7);
 
-  /*
-   * Breakpoints (used in @media queries — CSS custom props can't be used
-   * in @media, this block is a single source of truth / lookup table):
-   *
-   *   --bp-mobile:  640px  — phones (≤ 640): single column, smaller gutter,
-   *                          smaller type, hide non-essential header copy.
-   *   --bp-tablet:  960px  — tablets (≤ 960): /new page stacks its two
-   *                          columns (form + preview) since 2x ~480px is
-   *                          too tight, dashboard grid stays 2-up.
-   *
-   * Keep these two values in sync if you bump either constant.
-   */
+  /* Breakpoints — reference only (CSS vars can't be used in @media).
+     Grep for these values when adjusting. */
   --bp-mobile: 640px;
   --bp-tablet: 960px;
 

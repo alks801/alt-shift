@@ -1,9 +1,6 @@
 .grid {
   display: grid;
-  /* `minmax(0, 1fr)` stops a card with a long unbroken word from
-     stretching its column wider than the grid track. */
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  /* row-gap column-gap */
   gap: var(--space-6) var(--space-4);
 }
 

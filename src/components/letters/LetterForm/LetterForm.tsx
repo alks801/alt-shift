@@ -15,20 +15,6 @@ interface LetterFormProps {
   status: "idle" | "loading" | "ready" | "error";
 }
 
-/**
- * Controlled form for cover-letter inputs.
- *
- * Submit button modes:
- *   idle / error → primary "Generate Now"
- *   loading      → primary spinner, disabled
- *   ready        → secondary "Try Again" with refresh icon
- *
- * Validation:
- *   - Job title + Company are required (button disabled until both filled).
- *   - "Additional details" uses a soft limit: typing past the limit is allowed
- *     but flips the field to its invalid style and blocks submission, mirroring
- *     the "Too much text" state in the Figma spec.
- */
 export function LetterForm({ values, onChange, onSubmit, status }: LetterFormProps) {
   const isLoading = status === "loading";
   const isReady = status === "ready";

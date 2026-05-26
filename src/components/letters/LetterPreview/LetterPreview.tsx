@@ -15,10 +15,6 @@ interface LetterPreviewProps {
 const PLACEHOLDER = "Your personalized job application will appear here…";
 const DEFAULT_ERROR = "Something went wrong. Please try again.";
 
-/**
- * Right-hand preview pane. Owns the visual chrome (wrap, footer, live
- * region) and delegates the state-driven content area to `PreviewContent`.
- */
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
   const showFooter = status !== "loading" && status !== "error";
 
@@ -41,15 +37,6 @@ interface PreviewContentProps {
   errorMessage?: string;
 }
 
-/**
- * State-driven content area inside `LetterPreview`. Kept as a separate
- * component (rather than inline ternaries) so each state is read like a
- * dedicated little screen:
- *   - loading → floating brand orb (no partial text — calmer UX, no flicker).
- *   - error   → alert with retry hint.
- *   - ready   → full letter, scrollable.
- *   - idle    → placeholder copy.
- */
 function PreviewContent({ status, text, errorMessage }: PreviewContentProps) {
   if (status === "loading") {
     return (

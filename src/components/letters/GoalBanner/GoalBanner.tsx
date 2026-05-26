@@ -16,28 +16,14 @@ const SUBTITLE: Record<Variant, string> = {
 };
 
 interface GoalBannerProps {
-  /** Number of letters generated so far. Drives the progress indicator
-   *  ("X out of GOAL_LETTERS") and the filled segments of the progress bar. */
   count: number;
-  /** Picks which subtitle copy to show. Does NOT affect the CTA — that's
-   *  controlled by `onCreateNew`. See `SUBTITLE` for the exact strings. */
+  /** Controls subtitle copy; does NOT affect the CTA — see `onCreateNew`. */
   variant: Variant;
-  /** Optional CTA handler.
-   *  - When provided → the "Create New" CTA renders as a `<Button>` and
-   *    invokes this handler on click. Use on pages where navigating to
-   *    `/new` would be a no-op (e.g. the new-letter page itself, to reset
-   *    its form instead).
-   *  - When omitted  → the CTA renders as a `<ButtonLink href="/new">`. */
+  /** When set, CTA renders as `<Button>` invoking this handler (e.g. form reset).
+   *  When omitted, CTA renders as `<ButtonLink href="/new">`. */
   onCreateNew?: () => void;
 }
 
-/**
- * Motivational banner shown while the user is below the goal. Progress
- * adapts to the remaining count; subtitle copy is picked from `SUBTITLE`
- * by `variant`. The CTA is a link to `/new` by default, or a button that
- * calls `onCreateNew` if provided (used on the new-letter page itself,
- * where a navigation to `/new` would be a no-op).
- */
 export function GoalBanner({ count, variant, onCreateNew }: GoalBannerProps) {
   const goal = GOAL_LETTERS;
   const value = Math.min(goal, count);

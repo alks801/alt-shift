@@ -1,8 +1,6 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  /* Tinted with ink-900 (same hue as text), 40% — matches the rest of the
-     app's neutral palette. */
   background-color: color-mix(in srgb, var(--color-ink-900) 40%, transparent);
   display: flex;
   align-items: center;
