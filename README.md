@@ -36,7 +36,7 @@ npm run dev                  # http://localhost:3000
   inherit `currentColor`.
 - **`localStorage` with a versioned envelope** for persistence — survives
   reloads, works offline, no backend.
-- **`openai` SDK** server-side only; a deterministic mock when the key is
+- **`openai` SDK** server-side only; a randomized mock when the key is
   missing.
 - **Vitest + Testing Library** (jsdom). **Prettier + ESLint** (no overlap via
   `eslint-config-prettier`). **Husky + lint-staged + commitlint**

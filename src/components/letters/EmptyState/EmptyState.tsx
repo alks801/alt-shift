@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { Title } from "@/components/ui/Title";
 import { GOAL_LETTERS } from "@/lib/constants";
 import styles from "./EmptyState.module.css";
 
@@ -7,9 +8,9 @@ export function EmptyState() {
   return (
     <section className={styles.wrap} aria-labelledby="empty-title">
       <div className={styles.heading}>
-        <h2 id="empty-title" className={styles.title}>
+        <Title as="h2" size="sm" id="empty-title" className={styles.title}>
           No applications yet
-        </h2>
+        </Title>
         <Icon name="cat" size={24} />
       </div>
       <p className={styles.subtitle}>
