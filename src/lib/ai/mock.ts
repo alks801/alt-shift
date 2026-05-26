@@ -16,7 +16,7 @@ export function buildMockLetter(input: LetterInput): string {
 
   const paragraphs = [
     `Dear ${company} Team,`,
-    `I am writing to express my interest in the ${job} position at ${company}. The work your team is doing resonates with me, and I would be excited to contribute.`,
+    `I am writing to express my interest in the ${job} position at ${company}. The work your team is doing resonates with me, and I would be excited to contribute and grow with your team.`,
     strengths
       ? `My background in ${strengths} maps directly to what this role requires, and I bring a track record of shipping pragmatic, well-crafted work.`
       : `I bring a track record of shipping pragmatic, well-crafted work and learning quickly in unfamiliar territory.`,

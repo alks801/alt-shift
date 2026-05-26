@@ -11,7 +11,7 @@ interface LogoProps {
  * The asset already includes the "Alt+Shift" wordmark — no separate text
  * element is rendered, which keeps the logo pixel-perfect at any zoom level.
  */
-export function Logo({ height = 32 }: LogoProps) {
+export function Logo({ height = 48 }: LogoProps) {
   const width = Math.round((height * 179) / 48);
   return (
     <Image

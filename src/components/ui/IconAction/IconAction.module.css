@@ -1,0 +1,40 @@
+/* Inline "ghost" action button — text + icon, no fill/border. Used in card
+   footers and preview footers where a full CTA would be too heavy. */
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  /* Visual padding 0; hitbox stays generous via padding+negative margin
+     so the click target meets the 24×24 a11y guideline without nudging
+     surrounding layout. */
+  padding: 4px;
+  margin: -4px;
+  color: var(--color-ink-600);
+  font-family: inherit;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.root:hover:not(:disabled) {
+  color: var(--color-text);
+}
+
+.root:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Tones — only the hover/active colour changes, base colour is shared. */
+.danger:hover:not(:disabled) {
+  color: var(--color-danger);
+}
+
+.success {
+  color: var(--color-brand-600);
+}

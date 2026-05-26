@@ -26,7 +26,7 @@ export function AppHeader({ generatedCount }: AppHeaderProps) {
             title="Dashboard"
             className={iconButtonStyles.iconButton}
           >
-            <Icon name="home" />
+            <Icon name="home" size={20} />
           </Link>
         </div>
       </div>

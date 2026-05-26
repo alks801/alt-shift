@@ -3,14 +3,22 @@
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Icon } from "@/components/ui/Icon";
+import { IconAction } from "@/components/ui/IconAction";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import type { Letter } from "@/lib/types";
-import { cx } from "@/lib/cx";
 import styles from "./LetterCard.module.css";
 
 interface LetterCardProps {
   letter: Letter;
   onDelete: (id: string) => void;
+}
+
+const ACTION_ICON_SIZE = 20;
+
+/** Collapse blank lines so the preview reads as tight prose — the original
+ *  letter (with paragraph breaks) is still what gets copied to clipboard. */
+function previewText(body: string): string {
+  return body.replace(/\n{2,}/g, "\n");
 }
 
 export function LetterCard({ letter, onDelete }: LetterCardProps) {
@@ -27,23 +35,20 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
     >
       <div className={styles.body}>{letter.body}</div>
       <div className={styles.footer}>
-        <button
-          type="button"
-          className={styles.action}
-          data-tone="danger"
+        <IconAction
+          tone="danger"
+          leadingIcon={<Icon name="trash" size={ACTION_ICON_SIZE} />}
           onClick={() => setConfirmOpen(true)}
         >
-          <Icon name="trash" size={18} />
           Delete
-        </button>
-        <button
-          type="button"
-          className={cx(styles.action, copied && styles.actionCopied)}
+        </IconAction>
+        <IconAction
+          tone={copied ? "success" : "neutral"}
+          trailingIcon={<Icon name={copied ? "check" : "copy"} size={ACTION_ICON_SIZE} />}
           onClick={() => copy(letter.body)}
         >
           {copied ? "Copied!" : "Copy to clipboard"}
-          <Icon name={copied ? "check" : "copy"} size={18} />
-        </button>
+        </IconAction>
       </div>
 
       <ConfirmDialog

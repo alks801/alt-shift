@@ -1,0 +1,32 @@
+/* Shared properties for both sizes. Size-specific font-size / line-height
+   live in `.md` / `.lg` so callers pick one and never touch globals. */
+.title {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* 36 / 44, Figma "Display 36" — used for section H2s and form H1s. */
+.md {
+  font-size: var(--font-size-4xl);
+  /* 44/36, unitless so it tracks the mobile font-size below. */
+  line-height: 1.222;
+}
+
+/* 48 / 60, Figma "Display 48" — used for page H1s (dashboard). */
+.lg {
+  font-size: var(--font-size-display);
+  /* 60/48 = 1.25. */
+  line-height: 1.25;
+}
+
+@media (max-width: 640px) {
+  .md {
+    font-size: var(--font-size-2xl);
+  }
+  .lg {
+    font-size: var(--font-size-3xl);
+  }
+}

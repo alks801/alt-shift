@@ -4,6 +4,7 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { Title } from "@/components/ui/Title";
 import { EmptyState } from "@/components/letters/EmptyState";
 import { GoalBanner } from "@/components/letters/GoalBanner";
 import { LetterGrid } from "@/components/letters/LetterGrid";
@@ -24,7 +25,7 @@ export default function DashboardPage() {
         <PageContainer>
           <div className={styles.page}>
             <div className={styles.header}>
-              <h1 className={styles.title}>Applications</h1>
+              <Title size="lg">Applications</Title>
               <ButtonLink href="/new" leadingIcon={<Icon name="plus" />}>
                 Create New
               </ButtonLink>
@@ -40,8 +41,8 @@ export default function DashboardPage() {
                   onDelete={deleteLetter}
                 />
               )}
-              {showBanner && <GoalBanner count={count} />}
             </section>
+            {showBanner && <GoalBanner count={count} variant="today" />}
           </div>
         </PageContainer>
       </main>

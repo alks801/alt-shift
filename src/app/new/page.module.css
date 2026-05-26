@@ -2,17 +2,11 @@
   padding-bottom: var(--space-10);
 }
 
+/* Decorative overrides on top of the shared <Title /> primitive.
+   Type styles (size/weight/line-height) live on <Title> itself. */
 .title {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: -0.02em;
-  /* 44/36 from Figma; unitless so it scales with the mobile font-size. */
-  line-height: 1.222;
-  margin: var(--space-4) 0 0;
-  padding-bottom: var(--space-3);
+  padding-bottom: calc(var(--space-3) - 1px);
   border-bottom: 1px solid var(--color-border);
-  color: var(--color-text);
 }
 
 .titleMuted {
@@ -20,9 +14,15 @@
 }
 
 .layout {
+  /* Grid (not flex) for the two columns: `1fr 1fr` distributes free space
+     equally regardless of each child's intrinsic content or padding, which
+     flex' `flex-basis` algorithm can't always guarantee (a flex child's
+     padding can leak into its basis and skew the share). `minmax(0, 1fr)`
+     additionally prevents an `<input>`/heading min-content from stretching
+     its track. */
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-7);
   margin-bottom: var(--space-7);
   /* Hard cap so neither the textarea (grow) nor the preview (scrollable
      body) can push the layout vertically — they fill or scroll instead. */
@@ -48,11 +48,9 @@
 
 @media (max-width: 880px) {
   .layout {
+    /* Stack on mobile and drop the desktop cap — stacked columns need
+       natural heights. */
     grid-template-columns: 1fr;
-    /* Drop the desktop cap — stacked columns need natural heights. */
     height: auto;
-  }
-  .title {
-    font-size: var(--font-size-2xl);
   }
 }

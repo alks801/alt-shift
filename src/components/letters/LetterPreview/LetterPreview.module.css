@@ -9,9 +9,9 @@
 
 .placeholder {
   flex: 1;
-  color: var(--color-text-subtle);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-normal);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  line-height: 28px;
 }
 
 .loading,
@@ -68,35 +68,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-
-.copyAction {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: 0;
-  padding: 4px;
-  margin: -4px;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
-}
-
-.copyAction:hover:not(:disabled) {
-  color: var(--color-text);
-}
-
-.copyAction:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-.copied {
-  color: var(--color-brand-600);
 }
 
 @keyframes orbFloat {

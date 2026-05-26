@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { Title } from "@/components/ui/Title";
 import { LetterForm } from "@/components/letters/LetterForm";
 import {
   LetterPreview,
@@ -86,7 +87,9 @@ export default function NewLetterPage() {
 
   const heading = buildHeading(values);
   const count = letters.length;
-  const showBanner = count > 0 && count < GOAL_LETTERS;
+  // Banner only appears after a successful generation in this session,
+  // not just because there are pre-existing letters in storage.
+  const showBanner = status === "ready" && count < GOAL_LETTERS;
 
   return (
     <>
@@ -96,7 +99,7 @@ export default function NewLetterPage() {
           <div className={styles.page}>
             <div className={styles.layout}>
               <div className={styles.formColumn}>
-                <h1 className={styles.title}>{heading}</h1>
+                <Title className={styles.title}>{heading}</Title>
                 <LetterForm
                   values={values}
                   onChange={setValues}
@@ -113,7 +116,7 @@ export default function NewLetterPage() {
 
             {showBanner && (
               <div className={styles.bannerWrap}>
-                <GoalBanner count={count} />
+                <GoalBanner count={count} variant="general" />
               </div>
             )}
           </div>

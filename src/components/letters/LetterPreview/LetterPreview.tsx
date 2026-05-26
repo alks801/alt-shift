@@ -1,6 +1,8 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { IconAction } from "@/components/ui/IconAction";
 import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 import { cx } from "@/lib/cx";
 import styles from "./LetterPreview.module.css";
@@ -14,6 +16,7 @@ interface LetterPreviewProps {
 }
 
 const PLACEHOLDER = "Your personalized job application will appear here…";
+const DEFAULT_ERROR = "Something went wrong. Please try again.";
 
 /**
  * Right-hand preview pane.
@@ -27,38 +30,49 @@ const PLACEHOLDER = "Your personalized job application will appear here…";
  */
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
   const { copied, copy } = useCopyToClipboard();
-  const isLoading = status === "loading";
-  const isError = status === "error";
+  const showFooter = status !== "loading" && status !== "error";
 
   return (
     <div className={styles.wrap} aria-live="polite">
-      {isLoading ? (
-        <div className={styles.loading} aria-label="Generating letter">
-          <div className={styles.orb} role="presentation" />
-        </div>
-      ) : isError ? (
-        <div className={styles.error} role="alert">
-          <p>{errorMessage ?? "Something went wrong. Please try again."}</p>
-        </div>
-      ) : text ? (
-        <div className={cx(styles.body, "scrollbarThin")}>{text}</div>
-      ) : (
-        <p className={styles.placeholder}>{PLACEHOLDER}</p>
-      )}
+      {renderBody(status, text, errorMessage)}
 
-      {!isLoading && !isError && (
+      {showFooter && (
         <div className={styles.footer}>
-          <button
-            type="button"
+          <IconAction
             onClick={() => copy(text)}
             disabled={!text}
-            className={cx(styles.copyAction, copied && styles.copied)}
+            tone={copied ? "success" : "neutral"}
+            trailingIcon={<Icon name={copied ? "check" : "copy"} size={20} />}
           >
             {copied ? "Copied!" : "Copy to clipboard"}
-            <Icon name={copied ? "check" : "copy"} size={18} />
-          </button>
+          </IconAction>
         </div>
       )}
     </div>
   );
+}
+
+function renderBody(
+  status: PreviewStatus,
+  text: string,
+  errorMessage: string | undefined,
+): ReactNode {
+  if (status === "loading") {
+    return (
+      <div className={styles.loading} aria-label="Generating letter">
+        <div className={styles.orb} role="presentation" />
+      </div>
+    );
+  }
+  if (status === "error") {
+    return (
+      <div className={styles.error} role="alert">
+        <p>{errorMessage ?? DEFAULT_ERROR}</p>
+      </div>
+    );
+  }
+  if (text) {
+    return <div className={cx(styles.body, "scrollbarThin")}>{text}</div>;
+  }
+  return <p className={styles.placeholder}>{PLACEHOLDER}</p>;
 }

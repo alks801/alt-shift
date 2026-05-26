@@ -5,9 +5,14 @@
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: var(--space-4);
+}
+
+.row > * {
+  flex: 1 1 0;
+  /* Inputs have an intrinsic min-content; reset so equal halves stay equal. */
+  min-width: 0;
 }
 
 .actions {
@@ -24,6 +29,6 @@
 
 @media (max-width: 540px) {
   .row {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 }
