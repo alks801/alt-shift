@@ -31,14 +31,6 @@
 }
 
 /* Sizes — gap/font/line-height come from Figma spec. */
-.sm {
-  padding: 8px 14px;
-  gap: var(--space-2);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-  height: 36px;
-}
-
 .md {
   padding: 10px 18px;
   gap: var(--space-2);
@@ -85,29 +77,6 @@
 
 .secondary:hover:not(:disabled) {
   background-color: var(--color-bg-subtle);
-}
-
-.ghost {
-  background-color: transparent;
-  color: var(--color-text-muted);
-  border-color: transparent;
-}
-
-.ghost:hover:not(:disabled) {
-  color: var(--color-text);
-  background-color: var(--color-bg-subtle);
-}
-
-.danger {
-  background-color: transparent;
-  color: var(--color-text-muted);
-  border-color: transparent;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.danger:hover:not(:disabled) {
-  color: var(--color-danger);
 }
 
 /* Modifiers */

@@ -8,7 +8,6 @@ interface ButtonLinkProps
     LinkProps,
     ButtonStyleProps {
   leadingIcon?: ReactNode;
-  trailingIcon?: ReactNode;
   children: ReactNode;
   className?: string;
 }
@@ -21,9 +20,7 @@ interface ButtonLinkProps
 export function ButtonLink({
   variant,
   size,
-  fullWidth,
   leadingIcon,
-  trailingIcon,
   children,
   className,
   ...linkProps
@@ -31,11 +28,10 @@ export function ButtonLink({
   return (
     <Link
       {...linkProps}
-      className={cx(buttonClassName({ variant, size, fullWidth }), className)}
+      className={cx(buttonClassName({ variant, size }), className)}
     >
       {leadingIcon}
       {children}
-      {trailingIcon}
     </Link>
   );
 }

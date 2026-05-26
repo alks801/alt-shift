@@ -11,10 +11,6 @@
   color: var(--color-ink-700);
 }
 
-.controlWrap {
-  position: relative;
-}
-
 .control {
   width: 100%;
   /* Native <input>/<textarea> have an intrinsic min-content that can push
@@ -89,27 +85,11 @@
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  gap: var(--space-3);
-  /* Reserve baseline space (matches counter/hint line-height) so the
-     submit button below doesn't jump when an error or hint appears. */
+  /* Reserve baseline space (matches counter line-height) so the submit
+     button below doesn't jump when the counter appears. */
   min-height: 20px;
-}
-
-/* Hint / error / counter share the same footer typography (14/20 regular)
-   so they line up on the same baseline regardless of which combination is
-   shown. */
-.hint {
-  font-size: var(--font-size-md);
-  line-height: 20px;
-  color: var(--color-text-subtle);
-}
-
-.error {
-  font-size: var(--font-size-md);
-  line-height: 20px;
-  color: var(--color-danger);
 }
 
 .counter {

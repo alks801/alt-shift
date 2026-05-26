@@ -5,14 +5,10 @@ import {
   type TextareaHTMLAttributes,
 } from "react";
 import { cx } from "@/lib/cx";
-import { describedBy } from "./describedBy";
 import styles from "./Field.module.css";
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: ReactNode;
-  hint?: ReactNode;
-  error?: ReactNode;
-  invalid?: boolean;
   /**
    * Soft character cap. Users can still type past it, but the field flips
    * to its invalid style and the counter turns red. The parent decides
@@ -33,9 +29,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea(
     {
       label,
-      hint,
-      error,
-      invalid,
       id,
       className,
       maxLength,
@@ -50,7 +43,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) {
     const autoId = useId();
     const inputId = id ?? autoId;
-    const describedById = describedBy(inputId, error, hint);
 
     const currentLength =
       typeof value === "string"
@@ -62,7 +54,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const counterLimit = softMaxLength ?? maxLength;
     const overSoftLimit =
       typeof softMaxLength === "number" && currentLength > softMaxLength;
-    const isInvalid = invalid || Boolean(error) || overSoftLimit;
 
     return (
       <div className={cx(styles.field, grow && styles.grow)}>
@@ -77,35 +68,23 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             styles.control,
             styles.textarea,
             "scrollbarThin",
-            isInvalid && styles.invalid,
+            overSoftLimit && styles.invalid,
             className,
           )}
-          aria-invalid={isInvalid || undefined}
-          aria-describedby={describedById}
+          aria-invalid={overSoftLimit || undefined}
           value={value}
           defaultValue={defaultValue}
           {...rest}
         />
-        {(hint || error || (showCounter && counterLimit)) && (
+        {showCounter && counterLimit && (
           <div className={styles.footer}>
-            {showCounter && counterLimit && (
-              <span
-                className={styles.counter}
-                data-over-limit={overSoftLimit || undefined}
-                aria-live="polite"
-              >
-                {currentLength}/{counterLimit}
-              </span>
-            )}
-            {error ? (
-              <span id={`${inputId}-error`} className={styles.error}>
-                {error}
-              </span>
-            ) : hint ? (
-              <span id={`${inputId}-hint`} className={styles.hint}>
-                {hint}
-              </span>
-            ) : null}
+            <span
+              className={styles.counter}
+              data-over-limit={overSoftLimit || undefined}
+              aria-live="polite"
+            >
+              {currentLength}/{counterLimit}
+            </span>
           </div>
         )}
       </div>

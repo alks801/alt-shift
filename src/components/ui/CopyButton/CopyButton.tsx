@@ -7,9 +7,6 @@ import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
 interface CopyButtonProps {
   /** Text to write to the system clipboard on click. */
   text: string;
-  /** Force-disable the button. Defaults to disabled when `text` is empty. */
-  disabled?: boolean;
-  className?: string;
 }
 
 /**
@@ -20,17 +17,16 @@ interface CopyButtonProps {
  * caller just passes the text; the button handles UX (label + icon swap,
  * tone change) end-to-end.
  */
-export function CopyButton({ text, disabled, className }: CopyButtonProps) {
+export function CopyButton({ text }: CopyButtonProps) {
   const { copied, copy } = useCopyToClipboard();
   const handleClick = () => copy(text);
 
   return (
     <IconAction
       onClick={handleClick}
-      disabled={disabled ?? !text}
+      disabled={!text}
       tone={copied ? "success" : "neutral"}
       trailingIcon={<Icon name={copied ? "check" : "copy"} size={20} />}
-      className={className}
     >
       {copied ? "Copied!" : "Copy to clipboard"}
     </IconAction>
