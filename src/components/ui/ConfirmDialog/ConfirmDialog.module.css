@@ -1,7 +1,9 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(14, 27, 44, 0.4);
+  /* Tinted with ink-900 (same hue as text), 40% — matches the rest of the
+     app's neutral palette. */
+  background-color: color-mix(in srgb, var(--color-ink-900) 40%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,16 +25,11 @@
   animation: dialogIn var(--transition-base);
 }
 
-.title {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text);
-}
-
 .description {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  line-height: 24px;
   color: var(--color-text-muted);
-  line-height: var(--line-height-normal);
 }
 
 .actions {

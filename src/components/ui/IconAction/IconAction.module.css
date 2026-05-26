@@ -27,7 +27,6 @@
 
 .root:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
 }
 
 /* Tones — only the hover/active colour changes, base colour is shared. */
@@ -35,6 +34,10 @@
   color: var(--color-danger);
 }
 
-.success {
+.success,
+/* Pin the success colour on hover too — otherwise the base `.root:hover`
+   rule would darken it back to neutral, hiding the "done" feedback while
+   the user's pointer is still over the button. */
+.success:hover:not(:disabled) {
   color: var(--color-brand-600);
 }

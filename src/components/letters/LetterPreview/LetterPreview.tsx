@@ -1,8 +1,6 @@
 "use client";
 
-import { Icon } from "@/components/ui/Icon";
-import { IconAction } from "@/components/ui/IconAction";
-import { useCopyToClipboard } from "@/lib/hooks/useCopyToClipboard";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { cx } from "@/lib/cx";
 import styles from "./LetterPreview.module.css";
 
@@ -22,10 +20,7 @@ const DEFAULT_ERROR = "Something went wrong. Please try again.";
  * region) and delegates the state-driven content area to `PreviewContent`.
  */
 export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps) {
-  const { copied, copy } = useCopyToClipboard();
   const showFooter = status !== "loading" && status !== "error";
-
-  const handleCopy = () => copy(text);
 
   return (
     <div className={styles.wrap} aria-live="polite">
@@ -33,14 +28,7 @@ export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps
 
       {showFooter && (
         <div className={styles.footer}>
-          <IconAction
-            onClick={handleCopy}
-            disabled={!text}
-            tone={copied ? "success" : "neutral"}
-            trailingIcon={<Icon name={copied ? "check" : "copy"} size={20} />}
-          >
-            {copied ? "Copied!" : "Copy to clipboard"}
-          </IconAction>
+          <CopyButton text={text} />
         </div>
       )}
     </div>

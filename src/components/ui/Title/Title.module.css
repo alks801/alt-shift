@@ -8,6 +8,13 @@
   margin: 0;
 }
 
+/* 24 / 32, Figma "Display 24" — used for dialog and compact section heads. */
+.sm {
+  font-size: var(--font-size-2xl);
+  /* 32/24 = 1.333. */
+  line-height: 1.333;
+}
+
 /* 36 / 44, Figma "Display 36" — used for section H2s and form H1s. */
 .md {
   font-size: var(--font-size-4xl);

@@ -4,9 +4,10 @@ import styles from "./Title.module.css";
 
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
-/** `md` → Figma "Display 36/44" (section / form headings).
+/** `sm` → Figma "Display 24/32" (dialogs, compact sections).
+ *  `md` → Figma "Display 36/44" (section / form headings).
  *  `lg` → Figma "Display 48/60" (page headings, e.g. dashboard). */
-type TitleSize = "md" | "lg";
+type TitleSize = "sm" | "md" | "lg";
 
 type TitleProps<T extends HeadingTag> = {
   /** Semantic heading level. Defaults to `h1` — pick the level that matches

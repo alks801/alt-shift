@@ -57,8 +57,8 @@
   /* Breathing room so the scrollbar thumb doesn't sit on top of the text. */
   padding-right: var(--space-3);
   color: var(--color-text);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-body);
+  line-height: 28px;
   white-space: pre-wrap;
   word-break: break-word;
 }

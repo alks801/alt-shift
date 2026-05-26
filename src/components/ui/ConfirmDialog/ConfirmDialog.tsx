@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/Button";
+import { Title } from "@/components/ui/Title";
 import { cx } from "@/lib/cx";
 import styles from "./ConfirmDialog.module.css";
 
@@ -85,9 +86,9 @@ export function ConfirmDialog({
         aria-describedby={description ? descriptionId : undefined}
         className={styles.dialog}
       >
-        <h2 id={titleId} className={styles.title}>
+        <Title as="h2" size="sm" id={titleId}>
           {title}
-        </h2>
+        </Title>
         {description && (
           <p id={descriptionId} className={styles.description}>
             {description}

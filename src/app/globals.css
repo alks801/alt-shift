@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Always reserve space for the vertical scrollbar (whether or not it's
+     visible). Stops the layout from shifting right when something locks
+     `body { overflow: hidden }` — e.g. opening the delete confirm dialog. */
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   margin: 0;

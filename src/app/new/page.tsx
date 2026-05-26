@@ -34,6 +34,17 @@ export default function NewLetterPage() {
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
+  const handleCreateNew = () => {
+    abortRef.current?.abort();
+    setValues(EMPTY_FORM);
+    setStatus("idle");
+    setPreview("");
+    setErrorMessage(undefined);
+    // Reset the session ref so the next generation creates a fresh letter
+    // (instead of overwriting the previous one via `updateLetterBody`).
+    sessionLetterIdRef.current = null;
+  };
+
   const handleGenerate = async () => {
     abortRef.current?.abort();
     const controller = new AbortController();
@@ -116,7 +127,11 @@ export default function NewLetterPage() {
 
             {showBanner && (
               <div className={styles.bannerWrap}>
-                <GoalBanner count={count} variant="general" />
+                <GoalBanner
+                  count={count}
+                  variant="general"
+                  onCreateNew={handleCreateNew}
+                />
               </div>
             )}
           </div>
