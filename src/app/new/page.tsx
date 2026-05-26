@@ -31,6 +31,7 @@ export default function NewLetterPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const sessionLetterIdRef = useRef<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const generatingRef = useRef(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => abortRef.current?.abort(), []);
@@ -45,6 +46,9 @@ export default function NewLetterPage() {
   };
 
   const handleGenerate = async () => {
+    if (generatingRef.current) return;
+    generatingRef.current = true;
+
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
@@ -100,6 +104,8 @@ export default function NewLetterPage() {
           : "Something went wrong while generating the letter.";
       setErrorMessage(message);
       setStatus("error");
+    } finally {
+      generatingRef.current = false;
     }
   };
 

@@ -3,6 +3,8 @@
 A small HR-tech app that nudges job seekers to write at least 5 cover letters,
 generating each one with AI and tracking progress toward the goal.
 
+> **Live demo:** [alt-shift.vercel.app](https://alt-shift.vercel.app)
+>
 > Reference: [Variant Group React Developer Test Assignment](https://variantnet.notion.site/React-Developer-Test-Assignment-Variant-Group-d7a1e3460dc643958eb57a0518ce84b2).
 
 ## Quick start
@@ -94,11 +96,12 @@ the `<a><button/></a>` antipattern.
 ### AI — server-only, Promise-based client, no async generators
 
 `generateCoverLetter(input, { signal }): Promise<string>` is a plain async
-function. An earlier version had `onChunk` callbacks for live streaming;
-the loading state was redesigned around a calmer floating-orb animation,
-so streaming was dropped to keep the surface small. Server returns JSON
-`{ error }` on failure with the right status — no silent "swap in the mock
-on failure" behaviour, which used to hide real problems.
+function. The loading state uses a calmer floating-orb animation instead of
+progressive text reveal, so the client accumulates chunks silently and
+resolves once the stream ends. A 30-second timeout aborts stalled requests
+and surfaces a clear "timed out" error. Server returns JSON `{ error }` on
+failure with the right status — no silent "swap in the mock on failure"
+behaviour.
 
 ### Persistence — versioned `localStorage` envelope
 

@@ -3,7 +3,7 @@
 .root {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   background: transparent;
   border: 0;
   /* Visual padding 0; hitbox stays generous via padding+negative margin

@@ -25,12 +25,20 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
     onDelete(letter.id);
   };
 
+  const paragraphs = letter.body.split(/\n\n+/);
+
   return (
     <article
       className={styles.card}
       aria-label={[letter.jobTitle, letter.company].filter(Boolean).join(", ") || "Cover letter"}
     >
-      <div className={styles.body}>{letter.body}</div>
+      <div className={styles.body}>
+        {paragraphs.map((p, i) => (
+          <p key={i} className={styles.paragraph}>
+            {p}
+          </p>
+        ))}
+      </div>
       <div className={styles.footer}>
         <IconAction
           tone="danger"

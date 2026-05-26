@@ -24,13 +24,18 @@
   line-height: 28px;
   overflow: hidden;
   max-height: 152px;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
-  white-space: pre-wrap;
   overflow-wrap: anywhere;
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+.paragraph {
+  /* Custom line-height for paragraphs */
+  margin: 0 0 18px;
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
 }
 
 .footer {

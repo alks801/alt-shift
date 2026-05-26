@@ -18,6 +18,10 @@ interface ConfirmDialogProps {
   onCancel: () => void;
 }
 
+// Prevent focus from escaping the dialog
+const FOCUSABLE =
+  'a[href],button:not(:disabled),textarea,input,select,[tabindex]:not([tabindex="-1"])';
+
 export function ConfirmDialog({
   open,
   title,
@@ -43,6 +47,22 @@ export function ConfirmDialog({
       if (event.key === "Escape") {
         event.preventDefault();
         onCancel();
+        return;
+      }
+
+      if (event.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
     document.addEventListener("keydown", handleKey);
