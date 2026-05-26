@@ -17,9 +17,7 @@ describe("<LetterCard>", () => {
   it("renders the body preview and exposes job + company as the accessible name", () => {
     render(<LetterCard letter={LETTER} onDelete={() => {}} />);
     expect(screen.getByText(/Dear Apple Team/)).toBeInTheDocument();
-    expect(
-      screen.getByRole("article", { name: "Product manager, Apple" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("article", { name: "Product manager, Apple" })).toBeInTheDocument();
   });
 
   it("opens the confirm dialog before deleting and triggers onDelete on confirm", async () => {
