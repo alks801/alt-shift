@@ -18,5 +18,13 @@ export default defineConfig({
     setupFiles: ["./tests/setup.ts"],
     include: ["tests/**/*.test.{ts,tsx}"],
     css: { modules: { classNameStrategy: "non-scoped" } },
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["src/**/*.{ts,tsx}"],
+      // App Router glue (layout/page/route) — should be covered by E2E,
+      // not jsdom unit tests. Barrel files and type-only modules add noise.
+      exclude: ["src/app/**", "src/**/index.ts", "src/**/*.d.ts", "src/lib/types.ts"],
+    },
   },
 });
