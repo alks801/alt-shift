@@ -108,6 +108,21 @@ and surfaces a clear "timed out" error. Server returns JSON `{ error }` on
 failure with the right status — no silent "swap in the mock on failure"
 behaviour.
 
+### Abuse protection — body cap + naive rate limit
+
+The `/api/generate` route hits a paid third party (OpenAI), so it ships with
+two layers of basic protection:
+
+- **Body cap** — `content-length` is rejected past ~8 KB (413), and each
+  field has its own length cap mirrored from the client constants. Cuts off
+  multi-megabyte payloads before they hit `request.json()`.
+- **Rate limit** — `src/lib/ai/rateLimit.ts` is an in-memory sliding window
+  (10 req/min per IP, 429 + `Retry-After`). Honest trade-off: on Vercel each
+  serverless instance owns its own `Map`, so an attacker spreading load
+  across cold starts gets a multiplied effective limit. Good enough for a
+  demo + the "hammer Generate in one tab" case; for production the same API
+  swaps cleanly to `@upstash/ratelimit` + Vercel KV.
+
 ### Persistence — versioned `localStorage` envelope
 
 Key is `alt-shift:letters:v1`; payload is `{ version: 1, letters: [...] }`.

@@ -2,15 +2,44 @@ import type { NextRequest } from "next/server";
 import OpenAI from "openai";
 import { buildMockLetter } from "@/lib/ai/mock";
 import { SYSTEM_PROMPT, buildUserPrompt } from "@/lib/ai/prompt";
+import { getClientIp, rateLimit } from "@/lib/ai/rateLimit";
+import { DETAILS_MAX_LENGTH, STRENGTHS_MAX_LENGTH } from "@/lib/constants";
 import type { LetterInput } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MOCK_TOKEN_DELAY_MS = 22;
+/** Hard cap on request body (~8KB). Generous vs. the per-field limits below
+ *  so JSON overhead never trips it, but small enough that nobody can ship
+ *  multi-megabyte payloads at the OpenAI billing card. */
+const MAX_BODY_BYTES = 8 * 1024;
+const FIELD_LIMITS = {
+  jobTitle: 200,
+  company: 200,
+  strengths: STRENGTHS_MAX_LENGTH,
+  details: DETAILS_MAX_LENGTH,
+} as const;
 
 /** Plain-text stream; falls back to a deterministic mock when no API key. */
 export async function POST(request: NextRequest) {
+  const contentLength = Number(request.headers.get("content-length"));
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return jsonError("Payload too large", 413);
+  }
+
+  const limit = rateLimit(getClientIp(request));
+  if (!limit.allowed) {
+    const retryAfter = Math.max(1, Math.ceil((limit.resetAt - Date.now()) / 1000));
+    return new Response(JSON.stringify({ error: "Too many requests" }), {
+      status: 429,
+      headers: {
+        "Content-Type": "application/json",
+        "Retry-After": String(retryAfter),
+      },
+    });
+  }
+
   let input: unknown;
   try {
     input = await request.json();
@@ -19,6 +48,10 @@ export async function POST(request: NextRequest) {
   }
   if (!isValidInput(input)) {
     return jsonError("Job title and company are required", 400);
+  }
+  const tooLong = findTooLongField(input);
+  if (tooLong) {
+    return jsonError(`Field "${tooLong}" exceeds the allowed length`, 400);
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -52,6 +85,14 @@ function isValidInput(value: unknown): value is LetterInput {
     v.jobTitle.trim().length > 0 &&
     v.company.trim().length > 0
   );
+}
+
+/** Returns the name of the first field whose length exceeds its cap, or null. */
+function findTooLongField(input: LetterInput): keyof LetterInput | null {
+  for (const [key, max] of Object.entries(FIELD_LIMITS) as [keyof LetterInput, number][]) {
+    if (input[key].length > max) return key;
+  }
+  return null;
 }
 
 function jsonError(error: string, status: number): Response {
