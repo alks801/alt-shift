@@ -28,18 +28,6 @@ export async function POST(request: NextRequest) {
     return jsonError("Payload too large", 413);
   }
 
-  const limit = rateLimit(getClientIp(request));
-  if (!limit.allowed) {
-    const retryAfter = Math.max(1, Math.ceil((limit.resetAt - Date.now()) / 1000));
-    return new Response(JSON.stringify({ error: "Too many requests" }), {
-      status: 429,
-      headers: {
-        "Content-Type": "application/json",
-        "Retry-After": String(retryAfter),
-      },
-    });
-  }
-
   let input: unknown;
   try {
     input = await request.json();
@@ -56,8 +44,23 @@ export async function POST(request: NextRequest) {
 
   const apiKey = process.env.OPENAI_API_KEY;
 
+  // The mock path doesn't cost anything, so we skip the rate-limit for it —
+  // otherwise the demo deploy without a key would 429 after 10 generations
+  // and look broken. Only the real OpenAI path is gated.
   if (!apiKey) {
     return textStream(streamFromMock(input, request.signal), "mock");
+  }
+
+  const limit = rateLimit(getClientIp(request));
+  if (!limit.allowed) {
+    const retryAfter = Math.max(1, Math.ceil((limit.resetAt - Date.now()) / 1000));
+    return new Response(JSON.stringify({ error: "Too many requests" }), {
+      status: 429,
+      headers: {
+        "Content-Type": "application/json",
+        "Retry-After": String(retryAfter),
+      },
+    });
   }
 
   try {
@@ -67,7 +70,7 @@ export async function POST(request: NextRequest) {
     if (error instanceof OpenAI.APIError) {
       return jsonError(`OpenAI ${error.status ?? "error"}: ${error.message}`, error.status ?? 502);
     }
-    if ((error as Error)?.name === "AbortError") {
+    if (error instanceof Error && error.name === "AbortError") {
       return new Response(null, { status: 499 });
     }
     return jsonError("Failed to reach the AI provider", 502);

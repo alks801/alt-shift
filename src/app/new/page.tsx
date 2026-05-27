@@ -100,7 +100,7 @@ export default function NewLetterPage() {
       setPreview(trimmed);
       setStatus("ready");
     } catch (error) {
-      if ((error as Error).name === "AbortError") return;
+      if (error instanceof DOMException && error.name === "AbortError") return;
       const message =
         error instanceof GenerationError
           ? error.message

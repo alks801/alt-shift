@@ -26,7 +26,9 @@ export function LetterCard({ letter, onDelete }: LetterCardProps) {
     onDelete(letter.id);
   };
 
-  const paragraphs = letter.body.split(/\n\n+/);
+  // Split on blank lines, tolerating both LF and CRLF — different AI providers
+  // (and OS clipboards) emit different line endings.
+  const paragraphs = letter.body.split(/(?:\r?\n){2,}/);
   const m = markers.dashboard.letterGrid.cards(letter.id);
 
   return (

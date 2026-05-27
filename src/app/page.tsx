@@ -20,16 +20,19 @@ const m = markers.dashboard;
 export default function DashboardPage() {
   const { letters, hydrated, deleteLetter } = useLettersContext();
   const count = letters.length;
-  const isEmpty = hydrated && count === 0;
-  const showBanner = hydrated && count > 0 && count < GOAL_LETTERS;
+  // List chrome (heading, Create New, GoalStatus, GoalBanner) only renders
+  // once we know storage has letters. Before hydration we render nothing in
+  // the content area — any concrete UI would lie about state we haven't read.
+  const hasList = hydrated && count > 0;
+  const showBanner = hasList && count < GOAL_LETTERS;
 
   return (
     <>
-      <AppHeader generatedCount={isEmpty ? undefined : count} />
+      <AppHeader generatedCount={hasList ? count : undefined} />
       <main {...m.nodeProps}>
         <PageContainer>
           <div className={styles.page}>
-            {!isEmpty && (
+            {hasList && (
               <div className={styles.header}>
                 <Title size="lg">Applications</Title>
                 <ButtonLink
@@ -43,17 +46,19 @@ export default function DashboardPage() {
               </div>
             )}
 
-            <section className={styles.content}>
-              {isEmpty ? (
-                <>
-                  <DashboardIntro />
-                  <EmptyState />
-                  <DashboardFeatures />
-                </>
-              ) : (
-                <LetterGrid letters={letters} hydrated={hydrated} onDelete={deleteLetter} />
-              )}
-            </section>
+            {hydrated && (
+              <section className={styles.content}>
+                {count === 0 ? (
+                  <>
+                    <DashboardIntro />
+                    <EmptyState />
+                    <DashboardFeatures />
+                  </>
+                ) : (
+                  <LetterGrid letters={letters} onDelete={deleteLetter} />
+                )}
+              </section>
+            )}
             {showBanner && <GoalBanner count={count} variant="today" />}
           </div>
         </PageContainer>

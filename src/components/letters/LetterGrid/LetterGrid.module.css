@@ -4,29 +4,6 @@
   gap: var(--space-6) var(--space-4);
 }
 
-.skeleton {
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  height: 180px;
-  animation: pulse 1.4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton {
-    animation: none;
-  }
-}
-
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;

@@ -16,9 +16,7 @@ export function EmptyState() {
         </Title>
         <Icon name="cat" size={24} />
       </div>
-      <p className={styles.subtitle}>
-        Draft a tailored cover letter in seconds. Aim for {GOAL_LETTERS} to stand out.
-      </p>
+      <p className={styles.subtitle}>Aim for {GOAL_LETTERS} to land your next role.</p>
       <ButtonLink
         href="/new"
         leadingIcon={<Icon name="plus" />}

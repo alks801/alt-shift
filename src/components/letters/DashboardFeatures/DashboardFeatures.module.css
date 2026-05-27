@@ -37,11 +37,6 @@
     border-color var(--transition-base);
 }
 
-.feature:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-ink-400);
-}
-
 .featureIcon {
   display: inline-flex;
   width: 44px;

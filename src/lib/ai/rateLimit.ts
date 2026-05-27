@@ -56,3 +56,8 @@ export function getClientIp(request: NextRequest): string {
   if (forwarded) return forwarded.split(",")[0].trim();
   return request.headers.get("x-real-ip") ?? "anonymous";
 }
+
+/** Test-only escape hatch — clears the in-memory bucket between cases. */
+export function __resetForTests(): void {
+  buckets.clear();
+}

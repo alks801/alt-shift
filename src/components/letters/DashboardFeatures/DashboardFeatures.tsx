@@ -18,7 +18,8 @@ const FEATURES: Feature[] = [
   {
     icon: "repeat",
     title: "Regenerate freely",
-    description: "Don't like the result? Try again until it fits your voice.",
+    description:
+      "Don't like the result? Try rewrites it from the same fields until it fits your voice.",
   },
   {
     icon: "lock",

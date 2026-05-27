@@ -21,8 +21,13 @@ export function LetterPreview({ status, text, errorMessage }: LetterPreviewProps
   const showFooter = status !== "loading" && status !== "error";
 
   return (
-    <div className={styles.wrap} aria-live="polite" {...m.nodeProps}>
+    <div className={styles.wrap} aria-busy={status === "loading"} {...m.nodeProps}>
       <PreviewContent status={status} text={text} errorMessage={errorMessage} />
+
+      {/* Short, polite hint instead of reading the full letter aloud on ready. */}
+      <span className="sr-only" aria-live="polite">
+        {status === "ready" && text.length > 0 ? "Cover letter ready." : ""}
+      </span>
 
       {showFooter && (
         <div className={styles.footer}>
