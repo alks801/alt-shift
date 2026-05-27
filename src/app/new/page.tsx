@@ -9,6 +9,7 @@ import { LetterPreview, type PreviewStatus } from "@/components/letters/LetterPr
 import { GoalBanner } from "@/components/letters/GoalBanner";
 import { useLettersContext } from "@/lib/letters/LettersContext";
 import { generateCoverLetter, GenerationError } from "@/lib/ai/client";
+import { useMobileScrollTo } from "@/lib/hooks/useMobileScrollTo";
 import { GOAL_LETTERS } from "@/lib/constants";
 import type { LetterInput } from "@/lib/types";
 import styles from "./page.module.css";
@@ -35,6 +36,8 @@ export default function NewLetterPage() {
   const previewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  useMobileScrollTo(previewRef, () => status === "ready");
 
   const handleCreateNew = () => {
     abortRef.current?.abort();
