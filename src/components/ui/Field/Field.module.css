@@ -81,7 +81,6 @@
 
 .footer {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   /* Reserve space so the submit button doesn't jump when the counter appears. */
   min-height: 20px;

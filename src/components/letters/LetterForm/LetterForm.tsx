@@ -89,7 +89,7 @@ export function LetterForm({ values, onChange, onSubmit, status }: LetterFormPro
             variant="secondary"
             size="lg"
             fullWidth
-            leadingIcon={<Icon name="repeat" />}
+            leadingIcon={<Icon name="repeat" size={24} />}
             disabled={!canSubmit}
             {...m.submit.nodeProps}
           >
