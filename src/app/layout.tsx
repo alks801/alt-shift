@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { LettersProvider } from "@/lib/letters/LettersContext";
 import "./globals.css";
 
@@ -48,12 +49,15 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fixelDisplay.variable} ${fixelText.variable}`}>
       <body>
         <LettersProvider>{children}</LettersProvider>
       </body>
+      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }

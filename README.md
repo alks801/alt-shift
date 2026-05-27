@@ -4,8 +4,6 @@ A small HR-tech app that nudges job seekers toward 5 cover letters, generating
 each one with AI and tracking progress.
 
 > **Live demo:** [alt-shift-variantgroup.vercel.app](https://alt-shift-variantgroup.vercel.app)
->
-> Reference: [Variant Group React Developer Test Assignment](https://variantnet.notion.site/React-Developer-Test-Assignment-Variant-Group-d7a1e3460dc643958eb57a0518ce84b2).
 
 ## Quick start
 
@@ -197,4 +195,7 @@ GHCR, and restarts the container on the VPS via SSH. Required secrets:
 
 For Vercel: import the repo, defaults work. Add `OPENAI_API_KEY` /
 `OPENAI_MODEL` env vars to use the real model — without them the app uses the
-mock and stays fully demoable.
+mock and stays fully demoable. Optional `NEXT_PUBLIC_GA_ID` enables Google
+Analytics via `@next/third-parties` (deferred, App-Router-aware pageview
+tracking); leave empty in local/preview so dev traffic doesn't pollute the
+production property.
