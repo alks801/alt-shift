@@ -11,9 +11,12 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { browserName: "chromium" } }],
   webServer: {
-    command: "npm run dev -- --port 3001",
+    /* Force the mock generator regardless of what's in .env / .env.local.
+       Next.js only fills env vars from .env files when they aren't already
+       set in process.env, so exporting an empty value here wins. */
+    command: "OPENAI_API_KEY= npm run dev -- --port 3001",
     url: "http://localhost:3001",
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
     timeout: 30_000,
   },
 });
