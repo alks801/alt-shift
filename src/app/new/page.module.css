@@ -16,7 +16,7 @@
   /* Grid (not flex) — equal columns regardless of each child's intrinsic size. */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-7);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-9);
   /* Fixed height — children fill or scroll, never push the layout taller. */
   height: 600px;
 }
