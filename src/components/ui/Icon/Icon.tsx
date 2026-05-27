@@ -3,7 +3,7 @@ import { cx } from "@/lib/cx";
 import styles from "./Icon.module.css";
 
 /* Mono icons use mask-image → inherit currentColor; coloured use background-image. */
-export type IconName = "home" | "plus" | "copy" | "trash" | "repeat" | "check" | "cat";
+export type IconName = "home" | "plus" | "copy" | "trash" | "repeat" | "check" | "cat" | "lock";
 
 /** Icons that carry their own colours and must not be tinted. */
 const COLORED_ICONS: ReadonlySet<IconName> = new Set<IconName>(["cat"]);
@@ -17,7 +17,7 @@ interface IconProps {
   "aria-label"?: string;
 }
 
-export function Icon({ name, size = 18, className, "aria-label": ariaLabel }: IconProps) {
+export function Icon({ name, size = 20, className, "aria-label": ariaLabel }: IconProps) {
   const a11y = ariaLabel
     ? { role: "img" as const, "aria-label": ariaLabel }
     : { "aria-hidden": true as const };

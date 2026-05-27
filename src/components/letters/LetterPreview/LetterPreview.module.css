@@ -86,4 +86,10 @@
     min-height: 320px;
     padding: var(--space-5);
   }
+
+  .placeholder,
+  .body {
+    font-size: var(--font-size-lg);
+    line-height: 24px;
+  }
 }

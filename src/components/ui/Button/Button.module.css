@@ -48,19 +48,17 @@
 .primary {
   background-color: var(--color-accent);
   color: var(--color-white);
-  border-color: var(--color-accent);
+  border-width: 0;
 }
 
 .primary:hover:not(:disabled) {
   background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
 }
 
 /* Exclude loading state — loading keeps brand colours, disabled gets grey. */
 .primary:disabled:not([data-loading]) {
   background-color: var(--color-ink-300);
   color: var(--color-ink-400);
-  border-color: var(--color-ink-300);
   opacity: 1;
 }
 

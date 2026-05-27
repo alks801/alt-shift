@@ -10,7 +10,8 @@ import styles from "./AppHeader.module.css";
 const m = markers.header;
 
 interface AppHeaderProps {
-  generatedCount: number;
+  /** Letters generated so far. Pass `undefined` to hide the goal badge entirely. */
+  generatedCount?: number;
 }
 
 export function AppHeader({ generatedCount }: AppHeaderProps) {
@@ -21,7 +22,7 @@ export function AppHeader({ generatedCount }: AppHeaderProps) {
           <Logo />
         </Link>
         <div className={styles.right}>
-          <GoalStatus count={generatedCount} />
+          {generatedCount !== undefined && <GoalStatus count={generatedCount} />}
           <Link
             href="/"
             aria-label="Go to dashboard"

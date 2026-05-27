@@ -27,7 +27,7 @@ export function GoalStatus({ count }: GoalStatusProps) {
       </span>
       {reached ? (
         <span className={styles.badge} role="img" aria-label={`Goal reached: ${label}`}>
-          <Icon name="check" size={20} />
+          <Icon name="check" size={28} />
         </span>
       ) : (
         <ProgressDots value={value} total={goal} ariaLabel={label} />

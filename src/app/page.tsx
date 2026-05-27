@@ -5,6 +5,8 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Title } from "@/components/ui/Title";
+import { DashboardFeatures } from "@/components/letters/DashboardFeatures";
+import { DashboardIntro } from "@/components/letters/DashboardIntro";
 import { EmptyState } from "@/components/letters/EmptyState";
 import { GoalBanner } from "@/components/letters/GoalBanner";
 import { LetterGrid } from "@/components/letters/LetterGrid";
@@ -23,25 +25,31 @@ export default function DashboardPage() {
 
   return (
     <>
-      <AppHeader generatedCount={count} />
+      <AppHeader generatedCount={isEmpty ? undefined : count} />
       <main {...m.nodeProps}>
         <PageContainer>
           <div className={styles.page}>
-            <div className={styles.header}>
-              <Title size="lg">Applications</Title>
-              <ButtonLink
-                href="/new"
-                leadingIcon={<Icon name="plus" />}
-                className={styles.cta}
-                {...m.createNew.nodeProps}
-              >
-                Create New
-              </ButtonLink>
-            </div>
+            {!isEmpty && (
+              <div className={styles.header}>
+                <Title size="lg">Applications</Title>
+                <ButtonLink
+                  href="/new"
+                  leadingIcon={<Icon name="plus" />}
+                  className={styles.cta}
+                  {...m.createNew.nodeProps}
+                >
+                  Create New
+                </ButtonLink>
+              </div>
+            )}
 
             <section className={styles.content}>
               {isEmpty ? (
-                <EmptyState />
+                <>
+                  <DashboardIntro />
+                  <EmptyState />
+                  <DashboardFeatures />
+                </>
               ) : (
                 <LetterGrid letters={letters} hydrated={hydrated} onDelete={deleteLetter} />
               )}

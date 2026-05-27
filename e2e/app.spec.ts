@@ -45,8 +45,8 @@ test.describe("Dashboard (empty)", () => {
     await expect(page.locator(dashboard.emptyState.cta.selector)).toBeVisible();
   });
 
-  test("header shows 0/5 progress", async ({ page }) => {
-    await expect(page.getByText("0/5 applications generated")).toBeVisible();
+  test("header hides goal status when no letters exist", async ({ page }) => {
+    await expect(page.getByText("applications generated")).not.toBeVisible();
   });
 
   test("empty state CTA navigates to /new", async ({ page }) => {

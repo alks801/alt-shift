@@ -3,7 +3,7 @@
 A small HR-tech app that nudges job seekers to write at least 5 cover letters,
 generating each one with AI and tracking progress toward the goal.
 
-> **Live demo:** [alt-shift.vercel.app](https://alt-shift.vercel.app)
+> **Live demo:** [alt-shift-variantgroup.vercel.app](https://alt-shift-variantgroup.vercel.app)
 >
 > Reference: [Variant Group React Developer Test Assignment](https://variantnet.notion.site/React-Developer-Test-Assignment-Variant-Group-d7a1e3460dc643958eb57a0518ce84b2).
 

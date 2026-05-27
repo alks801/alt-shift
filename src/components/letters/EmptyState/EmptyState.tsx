@@ -17,8 +17,7 @@ export function EmptyState() {
         <Icon name="cat" size={24} />
       </div>
       <p className={styles.subtitle}>
-        Generate your first AI-written cover letter — your goal is {GOAL_LETTERS} applications to
-        maximize your chances of getting hired.
+        Draft a tailored cover letter in seconds. Aim for {GOAL_LETTERS} to stand out.
       </p>
       <ButtonLink
         href="/new"
@@ -26,7 +25,7 @@ export function EmptyState() {
         className={styles.action}
         {...m.cta.nodeProps}
       >
-        Create your first one
+        Start your first letter
       </ButtonLink>
     </section>
   );
